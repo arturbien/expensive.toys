@@ -3,14 +3,16 @@ import { Window, WindowContent, WindowHeader } from "react95";
 import styled from "styled-components";
 
 const Outer = styled.div`
-  position: absolute;
-  top: 200px;
-  left: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 99999;
 `;
 const Inner = styled.div``;
 const Win95Left = styled.div`
   filter: drop-shadow(2px 0px 0px ${(p) => p.theme.borderDark})
-    drop-shadow(2px 0px 0px ${(p) => p.theme.borderDarkest});
+    drop-shadow(2px 0px 0px ${(p) => p.theme.borderDarkest})
+    drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
   & > * {
     /* clip-path: polygon(0 0, 65% 0, 39% 100%, 0% 100%); */
     clip-path: polygon(61% 24%, 48% 69%, 53% 86%, 44% 100%, 0 100%, 0 0, 57% 0);
@@ -53,6 +55,13 @@ const Glass = styled.div`
     border-radius: 14px;
     mix-blend-mode: overlay;
   }
+`;
+
+const Paper = styled.div`
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: white;
 `;
 
 const BrokenPopup = () => {

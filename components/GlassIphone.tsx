@@ -8,7 +8,7 @@ const Wrapper = styled.div`
 const Glass = styled.div`
   --aspect-ratio: 0.55;
   aspect-ratio: var(--aspect-ratio);
-  height: 80vh;
+  height: 600px;
   position: relative;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 

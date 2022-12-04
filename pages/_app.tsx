@@ -5,6 +5,8 @@ import { styleReset, createScrollbars } from "react95";
 import original from "react95/dist/themes/original";
 import ms_sans_serif from "react95/dist/fonts/ms_sans_serif.woff2";
 import ms_sans_serif_bold from "react95/dist/fonts/ms_sans_serif_bold.woff2";
+import Navbar from "../components/Navbar";
+import Footer from "./Footer";
 
 const GlobalStyles = createGlobalStyle`
   ${styleReset}
@@ -36,7 +38,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={original}>
       <GlobalStyles />
+      <Navbar />
       <Component {...pageProps} />
+      <Footer />
     </ThemeProvider>
   );
 }

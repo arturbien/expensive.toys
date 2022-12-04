@@ -9,22 +9,21 @@ import holo from "../../public/holo.png";
 import balenciaga from "../../public/balenciaga.png";
 import Image from "next/image";
 import { Anchor, Button, GroupBox } from "react95";
-import { Grid, Center } from "../../components/Layout";
+import { Grid, Normal } from "../../components/Layout";
 
 const one = () => {
   return (
     <>
-      <Navbar />
       <Article>
         <Grid>
-          <Center>
+          <Normal>
             <Button size="lg" style={{ marginBottom: 32 }}>
               <LeftArrowIcon /> Back to posts
             </Button>
             <Heading>iOS style disappear gradient</Heading>
             <SubHeading>September 7th, 2022 — 7 min read</SubHeading>
-          </Center>
-          <Center>
+          </Normal>
+          <Normal>
             <Card>
               <StyledImage
                 src={balenciaga}
@@ -35,8 +34,8 @@ const one = () => {
                 // placeholder="blur" // Optional blur-up while loading
               />
             </Card>
-          </Center>
-          <Center>
+          </Normal>
+          <Normal>
             <Paragraph>
               I want to take everything I know about building{" "}
               <b>web applications</b> and package it up into a consumable form.
@@ -64,7 +63,7 @@ const one = () => {
               Write a funny or personal message to make somebody feel good
             </ProTip>
             <CableImage />
-          </Center>
+          </Normal>
         </Grid>
       </Article>
     </>
@@ -146,7 +145,6 @@ const Warning = styled.div`
   border-radius: 8px;
   border: 2px solid ${(p) => p.theme.borderDarkest};
   background: ${(p) => p.theme.tooltip};
-  left: -8px;
 
   &::before {
     content: "";

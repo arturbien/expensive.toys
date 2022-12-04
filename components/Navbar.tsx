@@ -1,55 +1,64 @@
 import React from "react";
-import { Frame } from "react95";
+import { Button, Frame } from "react95";
 import { createHatchedBackground } from "react95/dist/common";
 import original from "react95/dist/themes/original";
 import styled, { ThemeProvider } from "styled-components";
-import { Grid, Center, Wide } from "./Layout";
+import CTAButton from "./CTAButton";
+import EmbossedText from "./EmbossedText";
+import { Center, Grid } from "./Layout";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const AppBar = styled(Frame)`
   z-index: 2;
   position: sticky;
   top: 0;
   width: 100%;
-  height: 80px;
+  padding: 16px 0;
   z-index: 10;
 `;
 
-const EmbossedText = styled.div`
-  grid-column: 1 / span 10;
-  position: relative;
-  display: inline-block;
-  font-size: 28px;
-  font-weight: bold;
-  color: ${(p) => p.theme.borderDark};
-  text-shadow: -1px -1px 0px ${(p) => p.theme.materialText},
-    1px 1px 0px ${(p) => p.theme.borderLightest};
-  font-style: italic;
-  transform: translateY(16px);
-  #overlay {
-    position: absolute;
-    z-index: 999;
-    top: 0;
-    left: 0;
-    ${(p) =>
-      createHatchedBackground({
-        mainColor: p.theme.material,
-        pixelSize: 1,
-      })}
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    text-shadow: none;
+const NavButtons = styled.nav`
+  display: flex;
+  gap: 8px;
+  grid-column: 8 / span 5;
+  justify-content: flex-end;
+  button {
+    height: 50px;
   }
 `;
+
+const pages = [
+  { name: "Blog", href: "/blog" },
+  { name: "Contact", href: "/contact" },
+];
+
 const Navbar = () => {
+  const router = useRouter();
+  console.log({ router });
   return (
     <AppBar variant="window">
-      <Grid>
-        <EmbossedText>
-          <div id="behind">expensive.toys</div>
-          <div id="overlay">expensive.toys</div>
-        </EmbossedText>
-      </Grid>
+      <Center>
+        <Grid style={{ alignItems: "center" }}>
+          <Link href="/">
+            <EmbossedText text="expensive.toys" />
+          </Link>
+
+          <NavButtons>
+            {pages.map((page) => (
+              <Link href={page.href} key={page.name}>
+                <CTAButton
+                  active={router.pathname === page.href}
+                  variant="thin"
+                  forwardAs="div"
+                >
+                  {page.name}
+                </CTAButton>
+              </Link>
+            ))}
+          </NavButtons>
+        </Grid>
+      </Center>
     </AppBar>
   );
 };

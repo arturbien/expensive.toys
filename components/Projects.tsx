@@ -77,6 +77,13 @@ const Left = styled.div`
     font-weight: bold;
     filter: url(#filter4196);
   }
+  p {
+    font-size: 24px;
+    font-family: arial;
+    line-height: 1.75;
+    margin-top: 48px;
+    /* color: ${(p) => p.theme.materialTextDisabled}; */
+  }
 `;
 const Right = styled.div`
   grid-column: 8 / span 5;
@@ -92,12 +99,16 @@ const SprayText = styled.span`
 const Projects = () => {
   return (
     <Wrapper>
-      <Grid style={{ alignItems: "center", height: "100vh" }}>
+      <Grid style={{ alignItems: "center" }}>
         <Left>
           <h1>
             Sick of material design, ads with{" "}
             <SprayText>upbeat music</SprayText> and jogging.
           </h1>
+          <p>
+            I like to prototype, build useless stuff that looks cool and be
+            excited about things.
+          </p>
         </Left>
         <Right>
           <GlassIphone />

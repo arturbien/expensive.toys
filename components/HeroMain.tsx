@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Separator } from "react95";
 import styled from "styled-components";
-import { Grid, Wide } from "./Layout";
+import balloons from "./balloons";
+import CTAButton from "./CTAButton";
+import { Grid } from "./Layout";
 import Monitor from "./Monitor";
 
 const HeroMain = () => {
@@ -11,7 +13,6 @@ const HeroMain = () => {
         <Monitors>
           <div className="left-monitor">
             <Monitor
-              width={320}
               backgroundStyles={{
                 backgroundColor: "#dead25",
                 backgroundImage: `url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f5ad18b7-74e3-42a4-a6c3-ed075ba5d058/deoasnn-d8facf28-c859-4e0c-8f45-5a2963c07231.png/v1/fill/w_1280,h_720,q_80,strp/windows_95_clouds_wallpaper___16_9_widescreen_by_malekmasoud_deoasnn-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvZjVhZDE4YjctNzRlMy00MmE0LWE2YzMtZWQwNzViYTVkMDU4XC9kZW9hc25uLWQ4ZmFjZjI4LWM4NTktNGUwYy04ZjQ1LTVhMjk2M2MwNzIzMS5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.qR54NYAZoViO3rTcYcytpri1qyJuPg5MSnDLmhLAsbI)`,
@@ -22,16 +23,13 @@ const HeroMain = () => {
 
           <div className="right-monitor">
             <Monitor
-              width={320}
               backgroundStyles={{
                 backgroundColor: "black",
               }}
             />
           </div>
-
           <div className="center-monitor">
             <Monitor
-              width={320}
               backgroundStyles={{
                 background: "#dead25",
                 backgroundImage: `url(https://i.pinimg.com/originals/a7/a2/0e/a7a20e9a4c0c5ed6af6cbaf3c268d701.png)`,
@@ -51,12 +49,10 @@ const HeroMain = () => {
             UIs for a hefty salary.
           </h1>
           <Buttons>
-            <Button primary size="lg">
+            <CTAButton primary onClick={balloons}>
               Read more...
-            </Button>
-            <Button size="lg" disabled>
-              Release balloons
-            </Button>
+            </CTAButton>
+            <CTAButton disabled>Release balloons</CTAButton>
           </Buttons>
         </HeroText>
       </Grid>
@@ -157,23 +153,23 @@ const TiltText = styled.span`
   letter-spacing: -0.01em;
   -webkit-text-stroke: 0.01em #a3a3a3;
 `;
+
 const Monitors = styled.div`
   grid-column: 1 / span 7;
-
   position: relative;
+  left: -50px;
+  --monitor-width: 300;
+
   .left-monitor {
     display: inline-block;
     position: absolute;
-
     transform: scale(0.88);
-
     -webkit-mask-image: linear-gradient(to right, black, transparent);
     filter: opacity(0.5) brightness(0.2) blur(3px);
   }
   .center-monitor {
     display: inline-block;
     position: relative;
-
     left: 50%;
     transform: translateX(-50%);
     filter: brightness(0.85);
