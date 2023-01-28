@@ -1,10 +1,11 @@
 import React from "react";
-import { Button, Separator } from "react95";
 import styled from "styled-components";
 import balloons from "./balloons";
-import CTAButton from "./CTAButton";
+import CTAButton, { LinkCTAButton } from "./UI/CTAButton";
 import { Grid } from "./Layout";
 import Monitor from "./Monitor";
+import T from "./UI/Typography";
+import { HStack, VStack } from "./UI/Stack";
 
 const HeroMain = () => {
   return (
@@ -41,19 +42,19 @@ const HeroMain = () => {
         </Monitors>
         {/* <BrokenPopup /> */}
         <HeroText>
-          <h1>
+          <T.H1>
             Hi, I'm Artur Bień.
-            <br /> I build <RainbowText title="quality">
-              quality
-            </RainbowText>{" "}
-            UIs for a hefty salary.
-          </h1>
-          <Buttons>
-            <CTAButton primary onClick={balloons}>
-              Read more...
+            <br /> I build <T.Rainbow title="quality">quality</T.Rainbow> UIs
+            for fun.
+          </T.H1>
+          <HStack gap={16}>
+            <LinkCTAButton primary href="/blog">
+              Read my blog
+            </LinkCTAButton>
+            <CTAButton disabled onClick={balloons}>
+              Release balloons
             </CTAButton>
-            <CTAButton disabled>Release balloons</CTAButton>
-          </Buttons>
+          </HStack>
         </HeroText>
       </Grid>
     </Wrapper>
@@ -63,99 +64,60 @@ const HeroMain = () => {
 export default HeroMain;
 
 const Wrapper = styled.div`
-  padding: 200px 0;
+  min-height: 60vh;
+  display: flex;
+  padding-top: 200px;
+  @media only screen and (max-width: 1176px) {
+    padding-top: 96px;
+  }
+  @media only screen and (max-width: 796px) {
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+  @media only screen and (max-width: 510px) {
+    padding-top: 72px;
+  }
 `;
 
 const HeroText = styled.div`
-  grid-column: span 3;
   grid-column: 8 / span 5;
-  h1 {
-    font-size: 40px;
-    line-height: 1.5;
-    font-family: "Times New Roman", Times, serif;
-    font-family: arial;
-    font-weight: bold;
-  }
-`;
-const Buttons = styled.div`
-  margin-top: 48px;
   display: flex;
-  flex-direction: row;
-  gap: 16px;
-  button {
-    align-self: flex-start;
-    min-width: 120px;
-  }
-`;
-const RainbowText = styled.span`
-  color: #333;
-  /* This is for non-webkit browsers */
-  -webkit-text-fill-color: transparent;
-  position: relative;
-  display: inline-block;
-  font: bold 48px "Arial Narrow", sans-serif;
+  flex-direction: column;
+  gap: 48px;
+  @media only screen and (max-width: 1176px) {
+    grid-column: 3 / span 8;
+    margin-top: 48px;
+    gap: 24px;
 
-  &:before {
-    content: attr(title);
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 2;
-    background: -webkit-linear-gradient(
-      left,
-      rgb(176, 9, 151) 0%,
-      rgb(227, 33, 107) 10%,
-      rgb(249, 96, 30) 25%,
-      rgb(255, 180, 18) 40%,
-      rgb(255, 216, 45) 50%,
-      rgb(185, 221, 23) 61%,
-      rgb(65, 160, 60) 75%,
-      rgb(19, 54, 180) 90%,
-      rgb(116, 27, 157) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    align-items: center;
+    h1 {
+      text-align: center;
+    }
   }
-
-  &:after {
-    content: attr(title);
-    position: absolute;
-    z-index: 199;
-    left: -6px;
-    bottom: -10px;
-    z-index: 1;
-    -webkit-text-fill-color: #000;
-    -webkit-transform: skew(40deg, 0deg) scaleY(0.5);
-    opacity: 0.3;
+  @media only screen and (max-width: 796px) {
+    grid-column: 1 / span 12;
   }
-`;
-const TiltText = styled.span`
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  background: #390c0b;
-  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodâ€¦IgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
-  background: -moz-linear-gradient(top, #390c0b 0%, #f6bf28 73%);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0%, #390c0b),
-    color-stop(73%, #f6bf28)
-  );
-  background: -webkit-linear-gradient(top, #390c0b 0%, #f6bf28 73%);
-  background: -o-linear-gradient(top, #390c0b 0%, #f6bf28 73%);
-  background: -ms-linear-gradient(top, #390c0b 0%, #f6bf28 73%);
-  background: linear-gradient(to bottom, #390c0b 0%, #f6bf28 73%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#390c0b', endColorstr='#f6bf28', GradientType=0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.01em;
-  -webkit-text-stroke: 0.01em #a3a3a3;
+  @media only screen and (max-width: 510px) {
+    align-items: flex-start;
+    h1 {
+      text-align: left;
+    }
+  }
 `;
 
 const Monitors = styled.div`
+  contain: layout;
   grid-column: 1 / span 7;
+  @media only screen and (max-width: 1176px) {
+    grid-column: 3 / span 8;
+    left: 0;
+    --monitor-width: 280;
+  }
+  @media only screen and (max-width: 796px) {
+    grid-column: 1 / span 12;
+    left: 0;
+    --monitor-width: 280;
+  }
   position: relative;
   left: -50px;
   --monitor-width: 300;
@@ -181,5 +143,22 @@ const Monitors = styled.div`
     transform: scale(0.92);
     -webkit-mask-image: linear-gradient(to top left, black, transparent);
     filter: opacity(0.8) brightness(0.2) blur(1px);
+  }
+  @media only screen and (max-width: 678px) {
+    .left-monitor {
+      left: -70px;
+    }
+    .right-monitor {
+      right: -70px;
+    }
+  }
+  @media only screen and (max-width: 510px) {
+    --monitor-width: 220;
+    .left-monitor {
+      left: -120px;
+    }
+    .right-monitor {
+      right: -120px;
+    }
   }
 `;

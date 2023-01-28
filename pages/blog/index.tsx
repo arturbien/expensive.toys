@@ -1,124 +1,178 @@
-import React from "react";
+import fs from "fs";
+import matter from "gray-matter";
+import { GetStaticProps } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import path from "path";
 import { Button, Separator } from "react95";
-import counterStrike from "react95/dist/themes/counterStrike";
 import eggPlant from "react95/dist/themes/eggPlant";
-import honey from "react95/dist/themes/honey";
-import original from "react95/dist/themes/original";
-import plum from "react95/dist/themes/plum";
-import rose from "react95/dist/themes/rose";
-import vaporTeal from "react95/dist/themes/vaporTeal";
-import vermillion from "react95/dist/themes/vermillion";
 import styled, { ThemeProvider } from "styled-components";
-import { Center, Grid } from "../../components/Layout";
+import { Center, Grid, Normal } from "../../components/Layout";
+import { HStack, VStack } from "../../components/UI/Stack";
+import T from "../../components/UI/Typography";
 
-const LayoutGrid = styled.div`
-  padding-top: 200px;
-  grid-column: 2 / span 10;
-  width: 100%;
-  position: relative;
-  display: grid;
-  -webkit-box-align: start;
-  align-items: start;
-  grid-template:
-    "newest categories" auto
-    "newest popular" 1fr / 2fr 1fr;
-  gap: 64px 96px;
-
-  padding-bottom: 164px;
-
-  h1 {
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 36px;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  article + * {
-    margin: 24px 0;
-  }
-
-  article h2 {
-    font-size: 22px;
-    font-weight: 600;
-  }
-  article {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  article mark {
-    align-self: flex-start;
-  }
-  article a {
-    color: blue;
-    text-decoration: underline;
-  }
-`;
-const Newest = styled.section`
-  grid-area: newest / newest / newest / newest;
-`;
-const TopCategories = styled.section`
-  grid-area: categories / categories / categories / categories;
-`;
-const PopularContent = styled.section`
-  grid-area: popular / popular / popular / popular;
-`;
-const Post = () => {
+const Post = ({
+  title,
+  abstract,
+  slug,
+  publishedOn,
+  tags,
+}: {
+  title: string;
+  abstract: string;
+  slug: string;
+  publishedOn: string;
+  tags: string[];
+}) => {
   return (
-    <article>
-      <h2>How to make iOS style disappear effect</h2>
-      <p>{`No developer blog or technical documentation site is complete without an interactive code playground. The CodeSandbox team recently released a wonderful tool called Sandpack, to help us create these live-updating code editors. In this tutorial, I'll show you how I use it on this blog.`}</p>
-      <a>Read more</a>
-    </article>
+    <VStack as="article" gap={20} pt={32} pb={32}>
+      <VStack gap={4}>
+        <Link href={`/blog/${slug}`}>
+          <T.H2 color="anchor" style={{ textDecoration: "underline" }}>
+            {title}
+          </T.H2>
+        </Link>
+        <HStack>
+          <T.BodySmall color="materialTextDisabled">
+            <span>{publishedOn}</span> • {"1,624 views"} • {tags.join(" • ")}
+          </T.BodySmall>
+        </HStack>
+      </VStack>
+      <T.Body>{abstract}</T.Body>
+    </VStack>
   );
 };
 
-const Tags = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
+const Blog = ({ posts }: { posts: Post[] }) => {
+  const { filter } = useRouter().query;
+  const router = useRouter();
 
-const CategoriesTags = () => {
-  return (
-    <Tags>
-      {[original, vaporTeal, vermillion, rose, counterStrike, honey, plum].map(
-        (theme) => (
-          <ThemeProvider theme={eggPlant} key={theme.name}>
-            <Button variant="raised">{theme.name}</Button>
-          </ThemeProvider>
-        )
-      )}
-    </Tags>
-  );
-};
-const Blog = () => {
-  return (
-    <Center>
-      <Grid>
-        <LayoutGrid>
-          <Newest>
-            <h1>Recently published</h1>
+  const filterTags = filter ? (Array.isArray(filter) ? filter : [filter]) : [];
 
-            <Post />
-            <Separator />
-            <Post />
-            <Separator />
-            <Post />
-            <Separator />
-          </Newest>
-          <TopCategories>
-            <h1>Top Categories</h1>
-            <CategoriesTags />
-          </TopCategories>
-          <PopularContent>
-            <h1>PopularContent</h1>
-          </PopularContent>
-        </LayoutGrid>
-      </Grid>
-    </Center>
+  const filteredPosts = filterTags.length
+    ? posts.filter((post) =>
+        post.frontmatter.tags.some((tag) => filterTags.includes(tag))
+      )
+    : posts;
+
+  const tags = posts.reduce<string[]>((tags, post) => {
+    post.frontmatter.tags.forEach((tag) => {
+      if (!tags.includes(tag)) {
+        tags.push(tag);
+      }
+    });
+    return tags;
+  }, []);
+
+  return (
+    <>
+      <Center>
+        <Grid>
+          <Normal>
+            <VStack mt={96} mb={96}>
+              <HStack justifyContent={"space-between"} alignItems="baseline">
+                <T.H1>Blog</T.H1>
+                <T.BodyLarge>{filteredPosts.length} Articles</T.BodyLarge>
+              </HStack>
+              {tags.length && (
+                <HStack mt={16} gap={4}>
+                  <ThemeProvider theme={eggPlant} key={eggPlant.name}>
+                    <Button
+                      variant="raised"
+                      active={!filterTags.length}
+                      onClick={() => router.push(`/blog`)}
+                    >
+                      All
+                    </Button>
+                    {tags.map((tag) => (
+                      <Button
+                        style={{ flexShrink: 0 }}
+                        variant="raised"
+                        key={tag}
+                        active={filterTags.includes(tag)}
+                        onClick={() =>
+                          router.push(`/blog?filter=${encodeURIComponent(tag)}`)
+                        }
+                      >
+                        {tag}
+                      </Button>
+                    ))}
+                  </ThemeProvider>
+                </HStack>
+              )}
+              <VStack as="ul" mt={48}>
+                {filteredPosts.map((post) => (
+                  <li key={post.slug}>
+                    <Post
+                      slug={post.slug}
+                      title={post.frontmatter.title}
+                      abstract={post.frontmatter.abstract}
+                      publishedOn={post.frontmatter.publishedOn}
+                      tags={post.frontmatter.tags}
+                    />
+                    <Separator />
+                  </li>
+                ))}
+              </VStack>
+            </VStack>
+          </Normal>
+        </Grid>
+      </Center>
+    </>
   );
 };
 
 export default Blog;
+
+interface Post {
+  frontmatter: {
+    title: string;
+    heroImg: string;
+    tags: string[];
+    seoTitle: string;
+    abstract: string;
+    isPublished: boolean;
+    publishedOn: string;
+    layout: string;
+  };
+  body: string;
+  slug: string;
+}
+
+export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
+  const postsFodler = "./posts";
+  const files = fs.readdirSync(postsFodler);
+
+  const posts = files
+    .map((file) => {
+      const filePath = `${postsFodler}/${file}`;
+      const { name: fileName } = path.parse(filePath);
+      const content = fs.readFileSync(filePath, "utf-8");
+      const { data, content: body } = matter(content);
+
+      return {
+        frontmatter: {
+          ...data,
+          publishedOn: new Date(data.publishedOn).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }),
+        },
+        body,
+        slug: fileName,
+      } as Post;
+    })
+    .filter((p) => p.frontmatter.isPublished);
+
+  return {
+    props: {
+      posts,
+    },
+  };
+};
+
+const TagsWrapper = styled.div`
+  display: inline-flex;
+  align-items: center;
+`;

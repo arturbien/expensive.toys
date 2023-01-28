@@ -3,11 +3,11 @@ import { Button, Frame } from "react95";
 import { createHatchedBackground } from "react95/dist/common";
 import original from "react95/dist/themes/original";
 import styled, { ThemeProvider } from "styled-components";
-import CTAButton from "./CTAButton";
-import EmbossedText from "./EmbossedText";
+import CTAButton, { LinkCTAButton } from "./UI/CTAButton";
 import { Center, Grid } from "./Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { ExpensiveToys } from "./UI/Typography";
 
 const AppBar = styled(Frame)`
   z-index: 2;
@@ -16,6 +16,9 @@ const AppBar = styled(Frame)`
   width: 100%;
   padding: 16px 0;
   z-index: 10;
+  @media only screen and (max-width: 1176px) {
+    padding: 16px;
+  }
 `;
 
 const NavButtons = styled.nav`
@@ -25,6 +28,15 @@ const NavButtons = styled.nav`
   justify-content: flex-end;
   button {
     height: 50px;
+  }
+  @media only screen and (max-width: 1176px) {
+    gap: 4px;
+    button {
+      height: 40px;
+      font-size: 16px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 `;
 
@@ -41,20 +53,19 @@ const Navbar = () => {
       <Center>
         <Grid style={{ alignItems: "center" }}>
           <Link href="/">
-            <EmbossedText text="expensive.toys" />
+            <ExpensiveToys />
           </Link>
 
           <NavButtons>
             {pages.map((page) => (
-              <Link href={page.href} key={page.name}>
-                <CTAButton
-                  active={router.pathname === page.href}
-                  variant="thin"
-                  forwardAs="div"
-                >
-                  {page.name}
-                </CTAButton>
-              </Link>
+              <LinkCTAButton
+                href={page.href}
+                key={page.name}
+                active={router.pathname === page.href}
+                variant="thin"
+              >
+                {page.name}
+              </LinkCTAButton>
             ))}
           </NavButtons>
         </Grid>

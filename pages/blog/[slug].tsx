@@ -1,93 +1,221 @@
-import React from "react";
+import fs from "fs";
+import matter from "gray-matter";
+import { MDXRemote } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import Link from "next/link";
+import path from "path";
+import { Anchor, Button, GroupBox, Frame } from "react95";
 import {
   createDisabledTextStyles,
   createHatchedBackground,
 } from "react95/dist/common";
 import styled from "styled-components";
-import Navbar from "../../components/Navbar";
-import holo from "../../public/holo.png";
-import balenciaga from "../../public/balenciaga.png";
+import CTAButton from "../../components/UI/CTAButton";
+import DisabledIconsDemo from "../../components/DisabledIconsDemo";
+import { Center, Grid, Normal } from "../../components/Layout";
+import { postFilePaths, POSTS_PATH } from "../../utils/mdxUtils";
 import Image from "next/image";
-import { Anchor, Button, GroupBox } from "react95";
-import { Grid, Normal } from "../../components/Layout";
+import T from "../../components/UI/Typography";
+import Code from "../../components/UI/Code";
+import CssHeatMaps from "../../components/CssHeatMaps";
+import Typography from "../../components/UI/Typography";
 
-const one = () => {
-  return (
-    <>
-      <Article>
-        <Grid>
-          <Normal>
-            <Button size="lg" style={{ marginBottom: 32 }}>
-              <LeftArrowIcon /> Back to posts
-            </Button>
-            <Heading>iOS style disappear gradient</Heading>
-            <SubHeading>September 7th, 2022 — 7 min read</SubHeading>
-          </Normal>
-          <Normal>
-            <Card>
-              <StyledImage
-                src={balenciaga}
-                alt="Picture of the author"
-                // width={500} automatically provided
-                // height={500} automatically provided
-                // blurDataURL="data:..." automatically provided
-                // placeholder="blur" // Optional blur-up while loading
-              />
-            </Card>
-          </Normal>
-          <Normal>
-            <Paragraph>
-              I want to take everything I know about building{" "}
-              <b>web applications</b> and package it up into a consumable form.
-              For years I've envisioned a "KCD.edu" sort of site where I teach
-              the 99% of skills every web developer shares. I've always wanted
-              to help get people from "I want to learn to program" to "I can
-              build and maintain a web application". After building{" "}
-              <Anchor href="s">TestingJavaScript.com</Anchor> and{" "}
-              <Anchor href="f">EpicReact.dev</Anchor>, I think I'm ready to take
-              this on.
-            </Paragraph>
-            <Warning>
-              I'm about to explain some plans I have in place. It's important
-              that you understand plans are not promises and can (and do)
-              change. But I think it's fun to share my early plans with you, so
-              I'm going to. Just take them with a grain of salt.
-            </Warning>
-            <Paragraph>
-              And I'd like to tell you a bit about what I'm thinking for this
-              project and how you can participate in it while I work on it.
-            </Paragraph>
+const Card = styled.div`
+  position: relative;
+  margin: 64px 0px;
+  background: ${(p) => p.theme.canvas};
+  background: #fefbcc;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid ${(p) => p.theme.borderDarkest};
+  box-shadow: 2px 2px 0px ${(p) => p.theme.borderDarkest};
+`;
+const Img = styled.img`
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  margin: 0;
+`;
 
-            <ProTip>
-              <TipIcon />
-              Write a funny or personal message to make somebody feel good
-            </ProTip>
-            <CableImage />
-          </Normal>
-        </Grid>
-      </Article>
-    </>
-  );
+const h1 = styled(T.H1)`
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+`;
+const h2 = styled(T.H2)`
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+`;
+const p = styled(T.Body)`
+  margin-bottom: 2rem;
+`;
+
+const ul = styled.ul`
+  list-style-type: disc;
+  margin-bottom: 2rem;
+`;
+const li = styled(T.Body.withComponent("li"))`
+  list-style-type: disc;
+  margin-bottom: 1rem;
+  margin-inline-start: 2em;
+  b,
+  strong {
+    font-weight: bold;
+  }
+`;
+
+const CodeCard = styled(Card)`
+  width: 100%;
+  font-size: 14px;
+  overflow-x: auto;
+  padding: 1rem;
+  margin: 1rem 0;
+`;
+
+export const components = {
+  h1: h1,
+  h2: h2,
+  p: p,
+  img: Img,
+  code: Code,
+  ul,
+  li,
+  // code: CodeCard,
 };
 
-export default one;
+const Warning = styled.div`
+  font-family: arial;
+  padding: 1em 1.5em;
+  font-size: 16px;
+  line-height: 1.75;
+  position: relative;
+  border-radius: 8px;
+  border: 2px solid ${(p) => p.theme.borderDarkest};
+  background: ${(p) => p.theme.tooltip};
+
+  &::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    ${createHatchedBackground({})};
+    transform: translate(8px, 8px);
+  }
+
+  margin-bottom: 40px;
+`;
+
+// Custom components/renderers to pass to MDX.
+// Since the MDX files aren't loaded by webpack, they have no knowledge of how
+// to handle import statements. Instead, you must include components in scope
+// here.
+const renderers = {
+  CTAButton,
+  DisabledIconsDemo,
+  CssHeatMaps,
+  T: Typography,
+  Warning,
+  ...components,
+};
+
+export default function PostPage({ source, frontMatter }) {
+  console.log({ source, frontMatter });
+  return (
+    <>
+      <Head>
+        <title>{frontMatter.seoTitle}</title>
+        <meta property="og:type" content="website" />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image:height" content="675" />
+
+        <meta name="description" content={frontMatter.abstract} />
+        <meta name="og:title" content={frontMatter.title} />
+        <meta name="og:description" content={frontMatter.abstract} />
+        <meta name="og:image" content={frontMatter.heroImg} />
+        <meta name="og:image:alt" content={frontMatter.heroImg} />
+
+        <meta name="twitter:title" content={frontMatter.title} />
+        <meta name="twitter:description" content={frontMatter.abstract} />
+        <meta name="twitter:image" content={frontMatter.heroImg} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@artur_bien" />
+      </Head>
+      <Center>
+        <Article>
+          <Grid>
+            <Normal>
+              <T.H1>{frontMatter.title}</T.H1>
+              <T.Body color="materialTextDisabled" as="span">
+                {frontMatter.publishedOn}
+              </T.Body>
+              <Card>
+                <StyledImage
+                  src={frontMatter.heroImg}
+                  alt="Picture of the author"
+                  width={1280}
+                  height={675}
+                  // blurDataURL="data:..." automatically provided
+                  // placeholder="blur" // Optional blur-up while loading
+                />
+              </Card>
+              <MDXRemote {...source} components={renderers} />
+            </Normal>
+          </Grid>
+        </Article>
+      </Center>
+    </>
+  );
+}
+
+export const getStaticProps = async ({ params }) => {
+  const postFilePath = path.join(POSTS_PATH, `${params.slug}.mdx`);
+  const source = fs.readFileSync(postFilePath);
+
+  const { content, data } = matter(source);
+
+  const mdxSource = await serialize(content, {
+    // Optionally pass remark/rehype plugins
+    mdxOptions: {
+      remarkPlugins: [],
+      rehypePlugins: [],
+    },
+    scope: data,
+  });
+
+  return {
+    props: {
+      source: mdxSource,
+      frontMatter: {
+        ...data,
+        publishedOn: new Date(data.publishedOn).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      },
+    },
+  };
+};
+
+export const getStaticPaths = async () => {
+  const paths = postFilePaths
+    // Remove file extensions for page paths
+    .map((path) => path.replace(/\.mdx?$/, ""))
+    // Map the path into the static paths object required by Next.js
+    .map((slug) => ({ params: { slug } }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
 
 const Article = styled.article`
   padding: 96px 0px;
-`;
-
-const Heading = styled.h1`
-  font-size: 40px;
-  font-family: arial;
-  font-weight: 500;
-`;
-
-const SubHeading = styled.h1`
-  font-size: 18px;
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
-  ${createDisabledTextStyles()}
-  margin-top: 8px;
 `;
 
 const Paragraph = styled.p`
@@ -112,51 +240,6 @@ const StyledImage = styled(Image)`
   /* box-shadow: rgb(0 0 0 / 1%) 0px 1.7px 1.3px, rgb(0 0 0 / 2%) 0px 4.2px 3.1px,
     rgb(0 0 0 / 2%) 0px 7.9px 5.9px, rgb(0 0 0 / 2%) 0px 14.1px 10.5px,
     rgb(0 0 0 / 3%) 0px 26.3px 19.6px, rgb(0 0 0 / 4%) 0px 63px 47px; */
-`;
-
-const Card = styled.div`
-  position: relative;
-  margin: 64px 0px;
-  background: ${(p) => p.theme.canvas};
-  background: #fefbcc;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 2px solid ${(p) => p.theme.borderDarkest};
-  box-shadow: 2px 2px 0px ${(p) => p.theme.borderDarkest};
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("https://github.com/tromero/BayerMatrix/blob/master/images/bayer16.png?raw=true");
-    background-size: 25px;
-    /* opacity: 0.49; */
-    mix-blend-mode: soft-light;
-    /* filter: contrast(2); */
-  }
-`;
-
-const Warning = styled.div`
-  font-family: arial;
-  padding: 1em 1.5em;
-  font-size: 16px;
-  line-height: 1.75;
-  position: relative;
-  border-radius: 8px;
-  border: 2px solid ${(p) => p.theme.borderDarkest};
-  background: ${(p) => p.theme.tooltip};
-
-  &::before {
-    content: "";
-    z-index: -1;
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    ${createHatchedBackground({})};
-    transform: translate(8px, 8px);
-  }
-
-  margin-bottom: 40px;
 `;
 
 const ProTip = styled(GroupBox)`

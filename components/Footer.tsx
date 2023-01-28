@@ -2,13 +2,19 @@ import React from "react";
 import { Frame } from "react95";
 import eggPlant from "react95/dist/themes/eggPlant";
 import styled, { ThemeProvider } from "styled-components";
-import EmbossedText from "../components/EmbossedText";
-import { Center, Grid } from "../components/Layout";
+import { Center, Grid } from "./Layout";
+import { ExpensiveToys } from "./UI/Typography";
 
 const StyledFooter = styled(Frame)`
   width: 100%;
   padding: 0;
   padding: 16px 0px;
+  position: sticky;
+  top: 100vh;
+
+  @media only screen and (max-width: 1176px) {
+    padding: 16px;
+  }
 `;
 
 const Socials = styled.div`
@@ -25,7 +31,7 @@ const Footer = () => {
       <StyledFooter forwardedAs={"footer"}>
         <Center>
           <Grid>
-            <EmbossedText text="expensive.toys" />
+            <ExpensiveToys />
           </Grid>
         </Center>
       </StyledFooter>

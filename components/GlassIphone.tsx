@@ -6,6 +6,7 @@ const Wrapper = styled.div`
 `;
 
 const Glass = styled.div`
+  contain: layout;
   --aspect-ratio: 0.55;
   aspect-ratio: var(--aspect-ratio);
   height: 600px;

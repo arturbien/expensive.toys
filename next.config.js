@@ -1,8 +1,6 @@
-const withFonts = require('next-fonts');
+const withFonts = require("next-fonts");
 
-
-
-const withMDX = require('@next/mdx')({
+const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/,
   options: {
     // If you use remark-gfm, you'll need to use next.config.mjs
@@ -13,8 +11,20 @@ const withMDX = require('@next/mdx')({
     // If you use `MDXProvider`, uncomment the following line.
     // providerImportSource: "@mdx-js/react",
   },
-})
-module.exports = withFonts(withMDX({
-  // Append the default value with md extensions
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-}))
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // don't resolve 'fs' module on the client to prevent this error on build --> Error: Can't resolve 'fs'
+      config.resolve.fallback = {
+        fs: false,
+      };
+    }
+
+    return config;
+  },
+});
+module.exports = withFonts(
+  withMDX({
+    // Append the default value with md extensions
+    pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  })
+);

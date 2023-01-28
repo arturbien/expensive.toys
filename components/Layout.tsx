@@ -6,8 +6,7 @@ export const Center = styled.div`
   flex-direction: column;
 `;
 export const Grid = styled.div`
-  margin-left: 10vw;
-  margin-right: 10vw;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: 1.5rem;
@@ -17,4 +16,8 @@ export const Grid = styled.div`
 
 export const Normal = styled.div`
   grid-column: 3 / span 8;
+  @media only screen and (max-width: 1050px) {
+    grid-column: 1 / span 12;
+    padding: 0 16px;
+  }
 `;
