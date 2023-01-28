@@ -22,9 +22,20 @@ const withMDX = require("@next/mdx")({
     return config;
   },
 });
-module.exports = withFonts(
-  withMDX({
-    // Append the default value with md extensions
-    pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-  })
-);
+module.exports = {
+  ...withFonts(
+    withMDX({
+      // Append the default value with md extensions
+      pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+    })
+  ),
+  async redirects() {
+    return [
+      {
+        source: "/mandala",
+        destination: "https://mandala.expensive.toys/",
+        permanent: true,
+      },
+    ];
+  },
+};
