@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import path from "path";
 import { Button, Separator } from "react95";
-import eggPlant from "react95/dist/themes/eggPlant";
+import eggplant from "react95/dist/themes/eggplant";
 import styled, { ThemeProvider } from "styled-components";
 import { Center, Grid, Normal } from "../../components/Layout";
 import { HStack, VStack } from "../../components/UI/Stack";
@@ -76,7 +76,7 @@ const Blog = ({ posts }: { posts: Post[] }) => {
               </HStack>
               {tags.length && (
                 <HStack mt={16} gap={4}>
-                  <ThemeProvider theme={eggPlant} key={eggPlant.name}>
+                  <ThemeProvider theme={eggplant} key={eggplant.name}>
                     <Button
                       variant="raised"
                       active={!filterTags.length}

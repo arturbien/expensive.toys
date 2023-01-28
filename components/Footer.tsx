@@ -1,6 +1,6 @@
 import React from "react";
 import { Frame } from "react95";
-import eggPlant from "react95/dist/themes/eggPlant";
+import eggplant from "react95/dist/themes/eggplant";
 import styled, { ThemeProvider } from "styled-components";
 import { Center, Grid } from "./Layout";
 import { ExpensiveToys } from "./UI/Typography";
@@ -27,7 +27,7 @@ const Links = styled.div`
 
 const Footer = () => {
   return (
-    <ThemeProvider theme={eggPlant}>
+    <ThemeProvider theme={eggplant}>
       <StyledFooter forwardedAs={"footer"}>
         <Center>
           <Grid>
