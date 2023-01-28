@@ -1,11 +1,17 @@
 import styled from "styled-components";
+import BrokenPopup from "../components/BrokenPopup";
+import HeroMain from "../components/HeroMain";
+import { Center } from "../components/Layout";
+import Projects from "../components/Projects";
+import { VStack } from "../components/UI/Stack";
 
-const Swag = () => (
-  <div>
-    <Title>My First Next.js Page</Title>
-  </div>
+const Home = () => (
+  <>
+    <Center>
+      <HeroMain />
+      {/* <Projects /> */}
+    </Center>
+    {/* <BrokenPopup /> */}
+  </>
 );
-export default Swag;
-const Title = styled.h1`
-  color: red;
-`;
+export default Home;
