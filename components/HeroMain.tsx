@@ -43,7 +43,7 @@ const HeroMain = () => {
         {/* <BrokenPopup /> */}
         <HeroText>
           <T.H1>
-            Hi, I'm Artur Bień.
+            Hi, I&apos;m Artur Bień.
             <br /> I build <T.Rainbow title="quality">quality</T.Rainbow> UIs
             for fun.
           </T.H1>

@@ -22,6 +22,7 @@ import {
 import { Theme } from "react95/dist/types";
 import Code from "./UI/Code";
 import { createBorderStyles, createBoxStyles } from "react95/dist/common";
+import Image from "next/image";
 
 type FilterType = "original" | "modern";
 const Wrapper = styled.div``;
@@ -172,7 +173,7 @@ const IconsDemo = (props: { filterType: FilterType }) => {
         {iconsMap.map((icon) => (
           <ThemeProvider key={icon.theme.name} theme={icon.theme}>
             <FilterButton filterType={props.filterType}>
-              <img src={icon.src} alt="" />
+              <Image src={icon.src} alt="" />
             </FilterButton>
           </ThemeProvider>
         ))}
@@ -508,7 +509,7 @@ export const InteractiveDemo = () => {
                     }}
                   >
                     {iconsMap.map((icon, index) => (
-                      <img
+                      <Image
                         key={index}
                         src={icon.src}
                         alt=""
@@ -552,7 +553,7 @@ export const InteractiveDemo = () => {
                     }}
                   >
                     {iconsMap.map((icon, index) => (
-                      <img
+                      <Image
                         key={index}
                         src={icon.src}
                         alt=""
