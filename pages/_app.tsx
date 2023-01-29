@@ -47,7 +47,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   React.useEffect(() => {
     const handleRouteChange = (url: string) => {
-      alert("SWAG");
       ga.pageview(url);
     };
     router.events.on("routeChangeComplete", handleRouteChange);
