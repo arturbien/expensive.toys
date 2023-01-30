@@ -10,6 +10,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { Center, Grid, Normal } from "../../components/Layout";
 import { HStack, VStack } from "../../components/UI/Stack";
 import T from "../../components/UI/Typography";
+import Head from "next/head";
 
 const Post = ({
   title,
@@ -66,6 +67,31 @@ const Blog = ({ posts }: { posts: Post[] }) => {
 
   return (
     <>
+      <Head>
+        <title>Blog | Artur Bień</title>
+        <meta property="og:type" content="website" />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image:height" content="675" />
+
+        {/* <meta name="description" content={frontMatter.abstract} /> */}
+        <meta name="og:title" content={"Blog | Artur Bień"} />
+        <meta
+          name="og:description"
+          content={"Building user interfaces for fun."}
+        />
+        {/* <meta name="og:image" content={frontMatter.heroImg} /> */}
+        {/* <meta name="og:image:alt" content={frontMatter.heroImg} /> */}
+
+        <meta name="twitter:title" content={"Artur Bień"} />
+        <meta
+          name="twitter:description"
+          content={"Building user interfaces for fun."}
+        />
+        {/* <meta name="twitter:image" content={frontMatter.heroImg} /> */}
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@artur_bien" />
+      </Head>
       <Center>
         <Grid>
           <Normal>
