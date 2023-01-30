@@ -122,7 +122,6 @@ const renderers = {
 };
 
 export default function PostPage({ source, frontMatter }) {
-  console.log({ source, frontMatter });
   return (
     <>
       <Head>
@@ -134,12 +133,12 @@ export default function PostPage({ source, frontMatter }) {
         <meta name="description" content={frontMatter.abstract} />
         <meta name="og:title" content={frontMatter.title} />
         <meta name="og:description" content={frontMatter.abstract} />
-        <meta name="og:image" content={frontMatter.heroImg} />
-        <meta name="og:image:alt" content={frontMatter.heroImg} />
+        <meta name="og:image" content={frontMatter.heroImgAbsolute} />
+        <meta name="og:image:alt" content={frontMatter.heroImgAbsolute} />
 
         <meta name="twitter:title" content={frontMatter.title} />
         <meta name="twitter:description" content={frontMatter.abstract} />
-        <meta name="twitter:image" content={frontMatter.heroImg} />
+        <meta name="twitter:image" content={frontMatter.heroImgAbsolute} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@artur_bien" />
@@ -191,6 +190,7 @@ export const getStaticProps = async ({ params }) => {
       source: mdxSource,
       frontMatter: {
         ...data,
+        heroImgAbsolute: process.env.VERCEL_URL + data.heroImg,
         publishedOn: new Date(data.publishedOn).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",

@@ -47,7 +47,7 @@ const pages = [
 
 const Navbar = () => {
   const router = useRouter();
-  console.log({ router });
+
   return (
     <AppBar variant="window">
       <Center>
