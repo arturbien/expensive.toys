@@ -126,22 +126,22 @@ export default function PostPage({ source, frontMatter }) {
     <>
       <Head>
         <title>{frontMatter.seoTitle}</title>
+
+        <meta property="og:title" content={frontMatter.title} />
         <meta property="og:type" content="website" />
         <meta property="og:image:width" content="1280" />
         <meta property="og:image:height" content="675" />
-
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@artur_bien" />
+        <meta name="theme-color" content="#c6c6c6" />
         <meta name="description" content={frontMatter.abstract} />
-        <meta name="og:title" content={frontMatter.title} />
-        <meta name="og:description" content={frontMatter.abstract} />
-        <meta name="og:image" content={frontMatter.heroImgAbsolute} />
-        <meta name="og:image:alt" content={frontMatter.heroImgAbsolute} />
-
+        <meta property="og:title" content={frontMatter.title} />
+        <meta property="og:description" content={frontMatter.abstract} />
+        <meta property="og:image" content={frontMatter.heroImgAbsolute} />
+        <meta property="og:image:alt" content={frontMatter.heroImgAlt} />
         <meta name="twitter:title" content={frontMatter.title} />
         <meta name="twitter:description" content={frontMatter.abstract} />
         <meta name="twitter:image" content={frontMatter.heroImgAbsolute} />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content="@artur_bien" />
       </Head>
       <Center>
         <Article>
