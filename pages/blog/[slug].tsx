@@ -190,7 +190,7 @@ export const getStaticProps = async ({ params }) => {
       source: mdxSource,
       frontMatter: {
         ...data,
-        heroImgAbsolute: process.env.NEXT_PUBLIC_VERCEL_URL + data.heroImg,
+        heroImgAbsolute: "https://expensive.toys" + data.heroImg,
         publishedOn: new Date(data.publishedOn).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
