@@ -135,7 +135,6 @@ export default function PostPage({ source, frontMatter }) {
         <meta name="twitter:creator" content="@artur_bien" />
         <meta name="theme-color" content="#c6c6c6" />
         <meta name="description" content={frontMatter.abstract} />
-        <meta property="og:title" content={frontMatter.title} />
         <meta property="og:description" content={frontMatter.abstract} />
         <meta property="og:image" content={frontMatter.heroImgAbsolute} />
         <meta property="og:image:alt" content={frontMatter.heroImgAlt} />
