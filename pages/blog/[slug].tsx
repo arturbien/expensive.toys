@@ -20,6 +20,7 @@ import Image from "next/image";
 import T from "../../components/UI/Typography";
 import Code from "../../components/UI/Code";
 import CssHeatMaps from "../../components/CssHeatMaps";
+import SVGFilterHeatMaps from "../../components/SVGFilterHeatMaps";
 import Typography from "../../components/UI/Typography";
 
 const Card = styled.div`
@@ -49,12 +50,12 @@ const h2 = styled(T.H2)`
   margin-bottom: 2rem;
 `;
 const p = styled(T.Body)`
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 `;
 
 const ul = styled.ul`
   list-style-type: disc;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 `;
 const li = styled(T.Body.withComponent("li"))`
   list-style-type: disc;
@@ -64,6 +65,8 @@ const li = styled(T.Body.withComponent("li"))`
   strong {
     font-weight: bold;
   }
+
+  list-style-type: square;
 `;
 
 const CodeCard = styled(Card)`
@@ -118,6 +121,7 @@ const renderers = {
   CssHeatMaps,
   T: Typography,
   Warning,
+  SVGFilterHeatMaps,
   ...components,
 };
 

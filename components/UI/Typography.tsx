@@ -41,7 +41,7 @@ const EmbossedText = ({
 
 const BaseFont = styled.span<{ color?: keyof Theme }>`
   font-family: arial;
-  color: ${(p) => (p.color ? p.theme[p.color] : p.theme)};
+  color: ${(p) => (p.color ? p.theme[p.color] : p.theme.materialText)};
   a {
     color: ${(p) => p.theme.anchor};
     text-decoration: underline;
@@ -62,7 +62,7 @@ const T = {
       font-size: 30px;
     }
   `,
-  H2: styled(BaseFont.withComponent("h1"))`
+  H2: styled(BaseFont.withComponent("h2"))`
     font-size: 22px;
     line-height: 1.5;
     font-family: arial;

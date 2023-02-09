@@ -67,6 +67,7 @@ const Wrapper = styled.div`
   min-height: 60vh;
   display: flex;
   padding-top: 200px;
+  padding-bottom: 120px;
   @media only screen and (max-width: 1176px) {
     padding-top: 96px;
   }

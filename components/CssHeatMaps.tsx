@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { createNoise2D } from "simplex-noise";
 
-function createPerlinMatrix(
+export function createPerlinMatrix(
   width: number,
   height: number,
   scale: number = 1,
@@ -182,7 +182,7 @@ const SimpleDemo = ({
   const y = 20;
   const grid = createPerlinMatrix(x, y, 25, 0.3)
     .flatMap((a) => a)
-    .map((value) => (value + 1) / 2);
+    .map((value) => Number(((value + 1) / 2).toFixed(2)));
 
   const swagGrid = grid.map((value) => {
     const steps = 5;
@@ -207,44 +207,6 @@ const SimpleDemo = ({
           )
         )}
       </Grid>
-      {/* <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
-        <defs>
-          <filter id="green" color-interpolation-filters="sRGB">
-            <feComponentTransfer>
-              <feFuncR type="table" tableValues="0 0 1" />
-              <feFuncG type="table" tableValues="0 1 1" />
-              <feFuncB type="table" tableValues="0 0 1" />
-            </feComponentTransfer>
-          </filter>
-
-          <filter id="rainbow" color-interpolation-filters="sRGB">
-            <feComponentTransfer>
-              <feFuncR type="table" tableValues="0 0 0 1 1" />
-              <feFuncG type="table" tableValues="0 1 1 1 0" />
-              <feFuncB type="table" tableValues="1 1 0 0 0" />
-            </feComponentTransfer>
-          </filter>
-          <filter id="thermo" color-interpolation-filters="sRGB">
-            <feComponentTransfer>
-              <feFuncR type="table" tableValues="0 0.125 0.8 1 1" />
-              <feFuncG type="table" tableValues="0 0 0 0.843 1" />
-              <feFuncB type="table" tableValues="0 0.549 0.466 0 1" />
-            </feComponentTransfer>
-          </filter>
-        </defs>
-      </svg>
-      <Grid x={x} y={y} style={{ filter: "url(#rainbow)" }}>
-        {grid.map((dataPoint, index) => (
-          <div
-            key={index}
-            style={{
-              background: `rgb(${255 * dataPoint},${255 * dataPoint},${
-                255 * dataPoint
-              })`,
-            }}
-          />
-        ))}
-      </Grid> */}
     </>
   );
 };

@@ -1,5 +1,6 @@
+import Link from "next/link";
 import React from "react";
-import { Frame } from "react95";
+import { Anchor, Frame } from "react95";
 import eggplant from "react95/dist/themes/eggplant";
 import styled, { ThemeProvider } from "styled-components";
 import { Center, Grid } from "./Layout";
@@ -17,12 +18,27 @@ const StyledFooter = styled(Frame)`
   }
 `;
 
-const Socials = styled.div`
-  grid-column: 1 / span 6;
-`;
-
 const Links = styled.div`
   grid-column: 8 / span 5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 16px;
+  @media only screen and (max-width: 460px) {
+    grid-column: 1 / span 12;
+    justify-content: center;
+  }
+`;
+
+const LogoWrapper = styled.div`
+  grid-column: 1 / span 6;
+  display: flex;
+  align-self: center;
+  @media only screen and (max-width: 460px) {
+    grid-column: 1 / span 12;
+    justify-content: center;
+  }
 `;
 
 const Footer = () => {
@@ -31,7 +47,34 @@ const Footer = () => {
       <StyledFooter forwardedAs={"footer"}>
         <Center>
           <Grid>
-            <ExpensiveToys />
+            <LogoWrapper>
+              <Link href="/">
+                <ExpensiveToys />
+              </Link>
+            </LogoWrapper>
+            <Links>
+              <Anchor
+                href="https://twitter.com/artur_bien"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Twitter
+              </Anchor>
+              <Anchor
+                href="https://github.com/arturbien"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+              </Anchor>
+              <Anchor
+                href="https://www.linkedin.com/in/arturbien/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                LinkedIn
+              </Anchor>
+            </Links>
           </Grid>
         </Center>
       </StyledFooter>

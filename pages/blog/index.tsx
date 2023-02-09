@@ -189,7 +189,14 @@ export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
         slug: fileName,
       } as Post;
     })
-    .filter((p) => p.frontmatter.isPublished);
+    .filter((p) => p.frontmatter.isPublished)
+    .sort(
+      (a, b) =>
+        // @ts-expect-error
+        new Date(b.frontmatter.publishedOn) -
+        // @ts-expect-error
+        new Date(a.frontmatter.publishedOn)
+    );
 
   return {
     props: {

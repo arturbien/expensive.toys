@@ -16,7 +16,7 @@ const Code = (
 ) => {
   return (
     <StyledCode variant="well">
-      <code {...props} />{" "}
+      <code {...props} />
     </StyledCode>
   );
 };
