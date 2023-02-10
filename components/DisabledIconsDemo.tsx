@@ -173,7 +173,7 @@ const IconsDemo = (props: { filterType: FilterType }) => {
         {iconsMap.map((icon) => (
           <ThemeProvider key={icon.theme.name} theme={icon.theme}>
             <FilterButton filterType={props.filterType}>
-              <Image src={icon.src} alt="" />
+              <img src={icon.src} alt="" />
             </FilterButton>
           </ThemeProvider>
         ))}
@@ -509,7 +509,7 @@ export const InteractiveDemo = () => {
                     }}
                   >
                     {iconsMap.map((icon, index) => (
-                      <Image
+                      <img
                         key={index}
                         src={icon.src}
                         alt=""
@@ -553,7 +553,7 @@ export const InteractiveDemo = () => {
                     }}
                   >
                     {iconsMap.map((icon, index) => (
-                      <Image
+                      <img
                         key={index}
                         src={icon.src}
                         alt=""
