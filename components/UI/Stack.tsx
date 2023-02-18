@@ -3,6 +3,7 @@ import styled, { CSSProperties } from "styled-components";
 interface StackProps {
   alignItems?: CSSProperties["alignItems"];
   justifyContent?: CSSProperties["justifyContent"];
+  justifySelf?: CSSProperties["justifySelf"];
   gap?: number;
   children: React.ReactNode;
   m?: number; // margin
@@ -35,6 +36,7 @@ const Stack = styled.div<
   display: flex;
   align-items: ${(props) => props.alignItems};
   justify-content: ${(props) => props.justifyContent};
+  justify-self: ${(props) => props.justifySelf};
   flex-direction: ${(props) => props.flexDirection};
   gap: ${(props) => props.gap || 0}px;
 
