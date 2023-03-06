@@ -14,6 +14,7 @@ import {
 import styled from "styled-components";
 import CTAButton from "../../components/UI/CTAButton";
 import DisabledIconsDemo from "../../components/DisabledIconsDemo";
+import ColorDepthDemo from "../../components/ColorDepthDemo";
 import { Center, Grid, Normal } from "../../components/Layout";
 import { postFilePaths, POSTS_PATH } from "../../utils/mdxUtils";
 import Image from "next/image";
@@ -148,6 +149,7 @@ const renderers = {
   AmbilightEffectDemo,
   BlackPixelMaskingDemo,
   BlurVignetteDemo,
+  ColorDepthDemo,
   ...components,
 };
 
