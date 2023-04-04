@@ -72,13 +72,14 @@ const Box = styled.div`
   }
 
   .blinds {
-    --segment-size: 20px;
-    mask-image: repeating-linear-gradient(
+    --initial-segment-size: 20px;
+    --segment-size: var(--initial-segment-size);
+    -webkit-mask-image: repeating-linear-gradient(
       to bottom,
       #000000,
       #000000 var(--segment-size),
       transparent var(--segment-size),
-      transparent 20px
+      transparent var(--initial-segment-size)
     );
     transition: --segment-size 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
