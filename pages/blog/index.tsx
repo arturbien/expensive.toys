@@ -35,7 +35,7 @@ const Post = ({
         </Link>
         <HStack>
           <T.BodySmall color="materialTextDisabled">
-            <span>{publishedOn}</span> • {"1,624 views"} • {tags.join(" • ")}
+            <span>{publishedOn}</span> • {tags.join(" • ")}
           </T.BodySmall>
         </HStack>
       </VStack>

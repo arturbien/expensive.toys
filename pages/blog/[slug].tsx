@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import path from "path";
-import { Anchor, Button, GroupBox, Frame } from "react95";
+import { Anchor, Button, GroupBox, Frame, Separator } from "react95";
 import {
   createDisabledTextStyles,
   createHatchedBackground,
@@ -22,6 +22,7 @@ import Code from "../../components/UI/Code";
 import CssHeatMaps from "../../components/CssHeatMaps";
 import SVGFilterHeatMaps from "../../components/SVGFilterHeatMaps";
 import Typography from "../../components/UI/Typography";
+import FancyRevealEffects from "../../components/FancyRevealEffects";
 
 const Card = styled.div`
   position: relative;
@@ -122,6 +123,8 @@ const renderers = {
   T: Typography,
   Warning,
   SVGFilterHeatMaps,
+  Separator,
+  FancyRevealEffects,
   ...components,
 };
 
@@ -157,7 +160,7 @@ export default function PostPage({ source, frontMatter }) {
               <Card>
                 <StyledImage
                   src={frontMatter.heroImg}
-                  alt="Picture of the author"
+                  alt={frontMatter.heroImgAlt}
                   width={1280}
                   height={675}
                   // blurDataURL="data:..." automatically provided
