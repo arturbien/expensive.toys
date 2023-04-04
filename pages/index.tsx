@@ -10,6 +10,11 @@ const Home = () => (
   <>
     <Head>
       <title>Artur Bień</title>
+      <meta
+        name="google-site-verification"
+        content="77WkCNrItg2AyQU1WYDoD06BaXWBmCIjjzzvZzLwnVw"
+      />
+
       <meta property="og:type" content="website" />
       <meta property="og:image:width" content="1280" />
       <meta property="og:image:height" content="675" />
