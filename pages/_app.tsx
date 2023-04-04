@@ -12,6 +12,7 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import React from "react";
 import * as ga from "../lib/ga";
+import { Analytics } from "@vercel/analytics/react";
 
 const GlobalStyles = createGlobalStyle`
   ${styleReset}
@@ -77,6 +78,8 @@ export default function App({ Component, pageProps }: AppProps) {
             `,
         }}
       />
+      <Analytics />
+
       <ThemeProvider theme={original}>
         <GlobalStyles />
         <TextFiltersProvider />
