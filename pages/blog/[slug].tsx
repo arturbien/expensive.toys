@@ -110,6 +110,11 @@ const Warning = styled.div`
   }
 
   margin-bottom: 40px;
+
+  b,
+  strong {
+    font-weight: bold;
+  }
 `;
 
 // Custom components/renderers to pass to MDX.
