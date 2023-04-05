@@ -115,6 +115,13 @@ const Warning = styled.div`
   strong {
     font-weight: bold;
   }
+  a {
+    color: ${(p) => p.theme.anchor};
+    text-decoration: underline;
+  }
+  p {
+    margin-bottom: 0;
+  }
 `;
 
 // Custom components/renderers to pass to MDX.

@@ -20,7 +20,10 @@ This feature is super powerful and lets us create all sorts of fancy
 reveal effects by animating masks. Want to see it in action? Check
 out these awesome examples below!
 
-<Warning>As of April 2023, <strong>@property API</strong> is only supported in Chrome 85+ and Safari 16.4+.</Warning>
+<Warning>
+  As of April 2023, <strong>@property API</strong> is only supported in Chrome
+  85+ and Safari 16.4+.
+</Warning>
 
 ## Blinds
 
@@ -182,6 +185,59 @@ This effect is perfect for creating a sense of unveiling or discovery.
 ```
 
 <FancyRevealEffects variant="iris" />
+
+<Separator style={{ marginTop: 32, marginBottom: 32 }} />
+
+Now lets see how we can combine multiple masks together to make even
+crazier effects.
+
+If you want to learn how mask composition works read this
+[awesome article from Oscar Jite-Orimiono](https://blog.logrocket.com/css-mask-image-property/#mask-composite).
+
+<Warning>
+  Examples below are using **mask-composite** property that is only supported in
+  Safari and Firefox. To make them work in Chrome I'm using a fallback to
+  **-webkit-mask-composite** which is a [non standard CSS property that is not
+  on a standards
+  track](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-mask-composite)
+  (but works in Chrome and Safari).
+</Warning>
+
+## Iris Clock
+
+The "Iris-clock" effect is a combination of the "Iris" and the "Clock" effects.
+The **mask-composite** is set to **intersect** so that the final mask
+is the intersection of the two masks.
+
+And of course we're animating both of them!
+
+<FancyRevealEffects variant="iris-clock" />
+
+## Diamond Wipe
+
+Here three masks are combined together.
+Two **repeating-linear-gradient** masks "dissolve" the target in
+a diamond shape, and then the "Wipe" effect is added on top of them.
+
+<FancyRevealEffects variant="diamond-wipe" />
+
+## Iris grid
+
+Similar to the previous example but now the **repeating-linear-gradient**
+masks dissolve the target in a grid shape with the "Iris" effect added on top.
+
+<FancyRevealEffects variant="iris-grid" />
+
+## Mixer
+
+The "Mixer" is a monstrosity that comes from combining "Blinds", "Clock" and "Iris"
+effects together.
+
+This time the **mask-composite** is set to **exclude**
+so that the non-overlapping regions of source mask and destination
+mask are combined.
+
+<FancyRevealEffects variant="mixer" />
 
 <Separator style={{ marginTop: 32 }} />
 

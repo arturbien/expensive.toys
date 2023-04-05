@@ -43,6 +43,7 @@ const BaseFont = styled.span<{ color?: keyof Theme }>`
   font-family: arial;
   color: ${(p) => (p.color ? p.theme[p.color] : p.theme.materialText)};
   a {
+    /* TODO: fix duplicated anchor styles */
     color: ${(p) => p.theme.anchor};
     text-decoration: underline;
   }

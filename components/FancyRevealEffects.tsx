@@ -47,6 +47,7 @@ const Box = styled.div`
     color: white;
     pointer-events: none;
     text-transform: uppercase;
+    text-align: center;
   }
   .icon {
     width: 100%;
@@ -190,19 +191,204 @@ const Box = styled.div`
     --iris-radius: -50%;
     --iris-gradient-length: 0px;
   }
+
+  .mixer {
+    --initial-segment-size: 20px;
+    --segment-size: var(--initial-segment-size);
+
+    --iris-radius: 100%;
+    --iris-gradient-length: 60px;
+
+    --clock-hands-position: 100%;
+    --gradient-length: 30%;
+
+    --time: 3s;
+
+    -webkit-mask-image: repeating-linear-gradient(
+        to bottom,
+        #000000,
+        #000000 var(--segment-size),
+        transparent var(--segment-size),
+        transparent var(--initial-segment-size)
+      ),
+      radial-gradient(
+        black,
+        black var(--iris-radius),
+        transparent calc(var(--iris-radius) + var(--iris-gradient-length)),
+        transparent
+      ),
+      conic-gradient(
+        black var(--clock-hands-position),
+        transparent calc(var(--clock-hands-position) + var(--gradient-length)),
+        transparent
+      );
+
+    // Non standard property and not on standard track
+    // (but works for Safari and Chrome)
+    -webkit-mask-composite: xor;
+    // Supported by Firefox and Safari (not Chrome)
+    mask-composite: exclude;
+
+    transition: --iris-radius var(--time) cubic-bezier(0, 0.55, 0.45, 1),
+      --iris-gradient-length var(--time) ease-out,
+      --segment-size var(--time) cubic-bezier(0.16, 1, 0.3, 1),
+      --clock-hands-position 1s ease;
+  }
+
+  .mixer:hover {
+    --segment-size: 0px;
+    --iris-radius: -50%;
+    --iris-gradient-length: 0px;
+    --clock-hands-position: calc(-1 * var(--gradient-length));
+  }
+
+  .iris-grid {
+    --initial-segment-size: 20px;
+    --segment-size: 0px;
+
+    --iris-radius: 100%;
+    --iris-gradient-length: 60px;
+
+    --time: 2000ms;
+
+    --segment-size-half: calc(var(--segment-size) / 2);
+
+    // Non standard property and not on standard track
+    // (but works for Safari and Chrome)
+    -webkit-mask-composite: source-in;
+    // Supported by Firefox and Safari (not Chrome)
+    mask-composite: intersect;
+    -webkit-mask-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent var(--segment-size-half),
+        black var(--segment-size-half),
+        black calc(var(--initial-segment-size) - var(--segment-size-half)),
+        transparent calc(var(--initial-segment-size) - var(--segment-size-half)),
+        transparent var(--initial-segment-size)
+      ),
+      repeating-linear-gradient(
+        to right,
+        transparent 0px,
+        transparent var(--segment-size-half),
+        black var(--segment-size-half),
+        black calc(var(--initial-segment-size) - var(--segment-size-half)),
+        transparent calc(var(--initial-segment-size) - var(--segment-size-half)),
+        transparent var(--initial-segment-size)
+      ),
+      radial-gradient(
+        black,
+        black var(--iris-radius),
+        transparent calc(var(--iris-radius) + var(--iris-gradient-length)),
+        transparent
+      );
+    transition: --iris-radius var(--time) cubic-bezier(0, 0.55, 0.45, 1),
+      --iris-gradient-length var(--time) cubic-bezier(0.16, 1, 0.3, 1),
+      --segment-size var(--time) cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .iris-grid:hover {
+    --segment-size: var(--initial-segment-size);
+    --iris-radius: -50%;
+    --iris-gradient-length: 0px;
+  }
+
+  .diamond-wipe {
+    --initial-segment-size: 20px;
+    --segment-size: var(--initial-segment-size);
+
+    --wipe-position: 100%;
+    --gradient-length: 20%;
+
+    --time: 1s;
+
+    // Non standard property and not on standard track
+    // (but works for Safari and Chrome)
+    -webkit-mask-composite: source-in;
+    // Supported by Firefox and Safari (not Chrome)
+    mask-composite: intersect;
+    -webkit-mask-image: repeating-linear-gradient(
+        to bottom,
+        #000000,
+        #000000 var(--segment-size),
+        transparent var(--segment-size),
+        transparent var(--initial-segment-size)
+      ),
+      repeating-linear-gradient(
+        to right bottom,
+        #000000,
+        #000000 var(--segment-size),
+        transparent var(--segment-size),
+        transparent var(--initial-segment-size)
+      ),
+      linear-gradient(
+        to bottom right,
+        black var(--wipe-position),
+        transparent calc(var(--wipe-position) + var(--gradient-length)),
+        transparent
+      );
+    transition: --segment-size var(--time) ease-out,
+      --wipe-position var(--time) cubic-bezier(0, 0.55, 0.45, 1);
+  }
+
+  .diamond-wipe:hover {
+    --segment-size: 0px;
+    --wipe-position: calc(-1 * var(--gradient-length));
+  }
+
+  .iris-clock {
+    --iris-radius: 100%;
+    --iris-gradient-length: 60px;
+
+    --clock-hands-position: 100%;
+    --gradient-length: 30%;
+
+    // Non standard property and not on standard track
+    // (but works for Safari and Chrome)
+    -webkit-mask-composite: source-in;
+    // Supported by Firefox and Safari (not Chrome)
+    mask-composite: intersect;
+    -webkit-mask-image: radial-gradient(
+        black,
+        black var(--iris-radius),
+        transparent calc(var(--iris-radius) + var(--iris-gradient-length)),
+        transparent
+      ),
+      conic-gradient(
+        black var(--clock-hands-position),
+        transparent calc(var(--clock-hands-position) + var(--gradient-length)),
+        transparent
+      );
+    transition: --iris-radius 2s cubic-bezier(0, 0.55, 0.45, 1),
+      --iris-gradient-length 2s ease-out, --clock-hands-position 1s ease;
+  }
+
+  .iris-clock:hover {
+    --iris-radius: -50%;
+    --iris-gradient-length: 0px;
+    --clock-hands-position: calc(-1 * var(--gradient-length));
+  }
 `;
 
 const FancyRevealEffects = ({
   variant,
 }: {
-  variant: "blinds" | "wipe" | "clock" | "iris";
+  variant:
+    | "blinds"
+    | "wipe"
+    | "clock"
+    | "iris"
+    | "mixer"
+    | "iris-clock"
+    | "iris-grid"
+    | "diamond-wipe";
 }) => {
   return (
     <DemoFrame variant="field">
       <Inner>
         <Box>
           <div className={["icon", variant].join(" ")}>
-            <span>{variant}</span>
+            <span>{variant.split("-").join(" ")}</span>
           </div>
         </Box>
       </Inner>
