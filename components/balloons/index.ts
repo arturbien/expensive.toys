@@ -81,7 +81,9 @@ function releaseBalloons() {
 
   const sceneSize = { width: window.innerWidth, height: window.innerHeight };
   // make balloon height relative to screen size for this nice bokeh/perspective effect
-  const balloonHeight = Math.floor(sceneSize.height * 1);
+  const balloonHeight = Math.floor(
+    Math.min(sceneSize.width, sceneSize.height) * 1
+  );
 
   const balloonWidth =
     (balloonDefaultSize.width / balloonDefaultSize.height) * balloonHeight;
