@@ -7,7 +7,18 @@ import Monitor from "./Monitor";
 import T from "./UI/Typography";
 import { HStack, VStack } from "./UI/Stack";
 
+let balloonsReleasedGlobal = false;
+
 const HeroMain = () => {
+  const [balloonsReleased, setBalloonsReleased] = React.useState(false);
+
+  const releaseBalloons = () => {
+    balloons();
+    balloonsReleasedGlobal = true;
+    setBalloonsReleased(true);
+  };
+  console.log(balloonsReleasedGlobal);
+
   return (
     <Wrapper>
       <Grid style={{ alignItems: "center" }}>
@@ -51,7 +62,10 @@ const HeroMain = () => {
             <LinkCTAButton primary href="/blog">
               Read my blog
             </LinkCTAButton>
-            <CTAButton disabled onClick={balloons}>
+            <CTAButton
+              onClick={releaseBalloons}
+              disabled={balloonsReleased || balloonsReleasedGlobal}
+            >
               Release balloons
             </CTAButton>
           </HStack>
