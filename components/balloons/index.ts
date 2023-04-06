@@ -161,6 +161,11 @@ function releaseBalloons() {
       a.onfinish = removeParticle;
     });
   });
+
+  return () => {
+    style.remove();
+    balloonsContainer.remove();
+  };
 }
 
 let zIndex = 1;

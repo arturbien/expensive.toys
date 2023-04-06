@@ -8,17 +8,15 @@ import T from "./UI/Typography";
 import { HStack, VStack } from "./UI/Stack";
 
 const HeroMain = () => {
-  const removeBalloons = () => {
-    document.querySelector("balloons")?.remove();
-  };
+  const removeBalloonsRef = React.useRef<() => void | null>(null);
 
   const releaseBalloons = () => {
-    removeBalloons();
-    balloons();
+    removeBalloonsRef.current?.();
+    removeBalloonsRef.current = balloons();
   };
 
   React.useEffect(() => {
-    return removeBalloons;
+    return () => removeBalloonsRef.current?.();
   }, []);
 
   return (
