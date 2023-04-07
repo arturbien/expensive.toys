@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import * as ga from "../lib/ga";
 import { Analytics } from "@vercel/analytics/react";
+import { NextPage } from "next";
 
 const GlobalStyles = createGlobalStyle`
   ${styleReset}
@@ -43,7 +44,15 @@ const GlobalStyles = createGlobalStyle`
 
 `;
 
-export default function App({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
 
   React.useEffect(() => {
@@ -56,6 +65,17 @@ export default function App({ Component, pageProps }: AppProps) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, [router.events]);
+
+  // Use the layout defined at the page level, if available
+  const getLayout =
+    Component.getLayout ??
+    ((page) => (
+      <>
+        <Navbar />
+        {page}
+        <Footer />
+      </>
+    ));
 
   return (
     <>
@@ -84,7 +104,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <GlobalStyles />
         <TextFiltersProvider />
         <Navbar />
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
         <Footer />
       </ThemeProvider>
     </>
