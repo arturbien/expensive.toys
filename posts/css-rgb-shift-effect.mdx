@@ -1,0 +1,58 @@
+---
+title: RGB shift glitch effect with CSS and SVG filters
+heroImg: "/rgb-shift.png"
+heroImgAlt: Icons with different reveal effects
+tags: ["CSS"]
+seoTitle: RGB shift glitch effect with CSS and SVG filters | Artur Bień
+abstract: Utilizing @property API to create fancy reveal effects by animating masks.
+isPublished: true
+publishedOn: Tue Apr 04 2023 14:05:01 GMT+0200
+layout: Article
+---
+
+The RGB shift effect, also known as RGB split effect, is a popular
+visual effect that adds a sense of depth and dimensionality to images
+and videos. This effect is achieved by separating the red, green, and
+blue color channels (or red and cyan) of an image or video and offsetting
+them from each other. The result is a trippy, glitchy effect that makes
+the image or video appear as if it is shifting or splitting apart.
+
+While this effect is usually achieved by using a video editing software,
+it is also possible to create it using CSS.
+
+You might have already seen the effect recreated with the use of **mix-blend-mode** and
+stacking multiple elements on top of each other, or in case of
+text, using multiple **text-shadow**. However, this approach is a hacky and
+limited way of going about it.
+
+In this article, I will show you how to create the RGB shift effect
+that will work on any kind of element with just one line of CSS.
+
+## How it works
+
+- The feOffset element is used to create two duplicate versions of the image:
+  one shifted to the left and downwards (dx="-10" dy="5") and one shifted
+  to the right and upwards (dx="10" dy="-5").
+- The feComponentTransfer element is used to modify the color channels
+  of each version of the image. In the first one, only the red channel
+  is kept (<feFuncR type='identity' />) while the green and blue channels
+  are set to zero (<feFuncG type='discrete' tableValues='0' />
+  <feFuncB type="discrete" tableValues="0" />
+  ). In the second version, only the green and blue channels are kept (<feFuncR
+    type="discrete"
+    tableValues="0"
+  />
+  <feFuncG type="identity" /> <feFuncB type="identity" />) while the red channel
+  is set to zero.
+- The feBlend element is used to blend the two modified versions of the
+  image together using the "screen" mode (mode='screen'). This mode brightens
+  the image, and helps to create the RGB shift effect.
+- The feMerge element is used to merge the modified image with the original
+  image. This is done to keep the original detail of the image while applying
+  the RGB shift effect.
+
+By applying these steps, the filter produces an RGB shift effect on the image, where the red and cyan color channels are separated and shifted slightly from each other. This effect creates a dynamic, glitchy look that can add an interesting visual element to your CSS and HTML designs.
+
+## The "RGB shift effect" filter generator
+
+<RGBShiftDemo.Interactive />

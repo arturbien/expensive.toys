@@ -23,6 +23,7 @@ import CssHeatMaps from "../../components/CssHeatMaps";
 import SVGFilterHeatMaps from "../../components/SVGFilterHeatMaps";
 import Typography from "../../components/UI/Typography";
 import FancyRevealEffects from "../../components/FancyRevealEffects";
+import RGBShiftDemo from "../../components/RGBShiftDemo";
 
 const Card = styled.div`
   position: relative;
@@ -137,6 +138,7 @@ const renderers = {
   SVGFilterHeatMaps,
   Separator,
   FancyRevealEffects,
+  RGBShiftDemo,
   ...components,
 };
 
