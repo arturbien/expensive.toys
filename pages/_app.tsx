@@ -29,13 +29,15 @@ const GlobalStyles = createGlobalStyle`
     font-weight: bold;
     font-style: normal
   }
-  html, body, body > * { min-height: 100vh;}
+  html, body, body > * { 
+    min-height: 100vh;
+    background: ${(p) => p.theme.material};
+  }
   body {
     font-family: 'ms_sans_serif';
     -webkit-font-smoothing: antialiased;
     background: #cfcfcf;
-    background: ${(p) => p.theme.material};
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   * {
     box-sizing: border-box;
@@ -103,9 +105,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       <ThemeProvider theme={original}>
         <GlobalStyles />
         <TextFiltersProvider />
-        <Navbar />
         {getLayout(<Component {...pageProps} />)}
-        <Footer />
       </ThemeProvider>
     </>
   );

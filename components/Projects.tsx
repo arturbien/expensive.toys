@@ -17,7 +17,7 @@ const Gradients = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width 100vw;
+  width: 100vw;
   min-width: 2000px;
   /* background-image: radial-gradient(
         at 58% 69%,
