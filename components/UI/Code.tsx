@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   width: 100%;
   position: relative;
   margin: 1rem 0;
+  font-family: "ms_sans_serif";
 
   ${CopyButton} {
     visibility: hidden;
