@@ -1,38 +1,52 @@
 ---
 title: Ambilight effect for the Web with CSS
-heroImg: "/rgb-split.png"
+heroImg: "/ambilight-hero.png"
 heroImgAlt: Icons with different reveal effects
 tags: ["CSS", "SVG filter"]
 seoTitle: Ambilight effect for the Web with CSS | Artur Bień
-abstract: The RGB split effect, also known as RGB shift or 3D Anaglyph, is a popular visual effect that adds a sense of depth and dimensionality to images and videos.
+abstract: Use SVG filters to create the Ambilight Effect, which visually extends an element by illuminating area behind it.
 isPublished: true
-publishedOn: Sat Apr 08 2023 18:59:56 GMT+0200
+publishedOn: Thu Apr 13 2023 19:02:17 GMT+0200
 layout: Article
 ---
 
-Have you ever heard of the "Ambilight Effect"? It's a feature in some TVs
-that illuminates the wall behind the screen with colors that match the content
-being displayed. This effect enhances the viewing experience by "extending"
-the image beyond the TV onto a wall behind it creating more immersive experience.
+Have you ever heard of the ["Ambilight Effect"](https://www.youtube.com/watch?v=FZE5I-GcVVM)?
+It's a feature in some TVs that illuminates the wall behind the screen with
+colors that match the content being displayed.
+This effect enhances the viewing experience by "extending" the image beyond the
+TV onto a wall behind it creating more immersive experience.
 
-But did you know that you can create this effect on your website using CSS?
-That's right, by using SVG filters, we can achieve the same result and add
-some visual flair to our web pages. In this blog post, we'll explore how to
-create the Ambilight Effect with CSS and SVG filters.
+Some time ago I stumbled upon [this article](https://joebell.co.uk/craft/bias-lighting)
+by Joe Bell where he tried to recreate the effect with CSS.
 
-So, let's dive in and start creating some stunning visual effects for our web pages!
+The problem he encountered was that implementing the effect using more
+conventional CSS features involved using many elements and while
+the result looked great for bright images, it didn't look nice for dark images.
+
+What if there's another way to do it?
+
+I challanged myself to recreate the effect using SVG filters
+and eliminating both of the problems mentioned above.
+
+Not only that, but since it's a filter, we could apply it to any element! (well, with some exceptions)
+
+<Warning>
+The filter doesn't work on videos and animated elements in **Safari** and **Firefox**.
+
+Applying any complex filters might cause performance issues, so
+try to use them sparingly and test them on different browsers and devices.
+
+Results may slightly vary browser to browser so proceed with caution if you plan on using
+this in production.
+
+</Warning>
 
 <AmbilightEffectDemo.TVDemo />
 
-## How it works
+## How to use
 
-If you're new to SVG filters I highly recommend reading this awesome
-[SVG Filters 101](https://tympanus.net/codrops/2019/01/15/svg-filters-101/)
-article first.
-
-So here's the magical filter. It may look daunting but if you read it carefully
-and play with the Ambilight Effect Generator below you should get a feeling of
-how it actually works.
+As with any custom SVG filter, just paste the SVG in your HTML and then
+apply it with CSS:
 
 ```
 <svg width="0" height="0">
@@ -57,7 +71,7 @@ how it actually works.
             values="1 0 0 0 0
                     0 1 0 0 0
                     0 0 1 0 0
-                    33 33 33 101 -133"
+                    33 33 33 101 -132"
             result="bright-colors"
         />
         <feMorphology
@@ -77,6 +91,23 @@ how it actually works.
 </svg>
 ```
 
+```
+.ambilight {
+    filter: url(#ambilight);
+}
+```
+
+## How it works
+
+If you're new to SVG filters I highly recommend reading this awesome
+[SVG Filters 101](https://tympanus.net/codrops/2019/01/15/svg-filters-101/)
+article first.
+
+So here's how the magical filter works.
+It may look daunting but if you read it carefully
+and play with the **Ambilight Effect Generator** in the next section you should
+get an idea of what it actually does.
+
 - Increase the **filter** Filter Region to 300% by using the
   **width** and **height** attributes, then centering the region with the **x** and **y** attributes.
   This makes sure that the "Ambilight" light source is not clipped by the
@@ -95,6 +126,14 @@ how it actually works.
 - Finally, using **feOffset** we copy the original image again and use **feComposite** to
   combine it with the ambilight light source from the previous step.
 
-## Ambilight Effect generator
+## Ambilight Effect Generator
+
+To see what happens under the hood, reset all sliders and check the
+**"Hide source"** checkbox.
+
+Then go fiddle with them one by one to see what happens!
+
+The default state is what I figured was the best configuration for the filter,
+but you can tweak it to your needs and generate a filter that suits you best.
 
 <AmbilightEffectDemo.BasicDemo />

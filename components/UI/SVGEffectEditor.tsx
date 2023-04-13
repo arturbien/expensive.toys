@@ -14,6 +14,7 @@ const LogoText = styled.div`
 
 const RGBSplitEditorWrapper = styled.div`
   background: #808080;
+  contain: paint, layout, size;
 `;
 
 type Props = {

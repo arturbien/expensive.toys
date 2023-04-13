@@ -5,7 +5,7 @@ import React from "react";
 import { browserName } from "react-device-detect";
 import { renderToString } from "react-dom/server";
 import { Button, Checkbox, Separator, Slider, Tooltip } from "react95";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ThermalVisionHero from "../public/svg-heat-maps-hero.png";
 import SVGEffectEditor from "./UI/SVGEffectEditor";
 import { HStack, VStack } from "./UI/Stack";
@@ -151,7 +151,7 @@ const BasicDemo = () => {
         filterTarget={
           <div
             style={{
-              padding: 80,
+              padding: 60,
               filter: "url(#ambilight)",
 
               //   transform: "translateZ(0)",
@@ -258,7 +258,6 @@ const DialogOverlay = styled(Dialog.Overlay)`
   inset: 0;
   backdrop-filter: brightness(0.1) blur(30px);
   z-index: 999;
-  background: white;
 `;
 
 const DialogContent = styled(Dialog.Content)`
@@ -294,21 +293,57 @@ function useIsChrome() {
   return isChrome;
 }
 
+const spin = keyframes`
+ 0% { --deg: 0deg; }
+ 100% { --deg: 360deg; }
+`;
+const AmbilightButtonWrapper = styled.div`
+  position: relative;
+  margin: 24px 0;
+  @property --deg {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  &::before {
+    --deg: 0deg;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(
+      from var(--deg),
+      red,
+      yellow,
+      lime,
+      aqua,
+      cyan,
+      magenta,
+      red
+    );
+    filter: blur(24px);
+    animation: ${spin} 6s linear infinite;
+    pointer-events: none;
+  }
+`;
+
 const TVDemo = () => {
   const isChrome = useIsChrome();
 
   if (!isChrome)
     return (
       <HStack fullWidth justifyContent="center" alignItems="center">
-        <Tooltip text="Browser not supported. Try Chrome.">
-          <Button
-            size="lg"
-            disabled
-            style={{ minWidth: 160, fontWeight: "bold" }}
-          >
-            Try Ambilight on Video !
-          </Button>
-        </Tooltip>
+        <AmbilightButtonWrapper>
+          <Tooltip text="Browser not supported. Try Chrome.">
+            <Button
+              size="lg"
+              disabled
+              style={{ minWidth: 160, fontWeight: "bold" }}
+            >
+              Try Ambilight on Video !
+            </Button>
+          </Tooltip>
+        </AmbilightButtonWrapper>
       </HStack>
     );
 
@@ -316,11 +351,17 @@ const TVDemo = () => {
     <>
       <Dialog.Root>
         <HStack fullWidth justifyContent="center" alignItems="center">
-          <Dialog.Trigger asChild>
-            <Button size="lg" style={{ minWidth: 160, fontWeight: "bold" }}>
-              Try Ambilight on Video !
-            </Button>
-          </Dialog.Trigger>
+          <AmbilightButtonWrapper>
+            <Dialog.Trigger asChild>
+              <Button
+                size="lg"
+                primary
+                style={{ minWidth: 240, fontWeight: "bold" }}
+              >
+                Try Ambilight on Video !
+              </Button>
+            </Dialog.Trigger>
+          </AmbilightButtonWrapper>
         </HStack>
 
         <Dialog.Portal container={document.getElementById("portal-root")!}>
@@ -334,8 +375,10 @@ const TVDemo = () => {
                 <iframe
                   width="560"
                   height="315"
-                  //   src="https://www.youtube.com/embed/G1hKzCkywM8?autoplay=1"
-                  src="https://www.youtube.com/embed/yAkVfopBbN0?autoplay=1"
+                  // src="https://www.youtube.com/embed/G1hKzCkywM8?autoplay=1"
+                  // src="https://www.youtube.com/embed/tO01J-M3g0U?autoplay=1"
+                  // src="https://www.youtube.com/embed/mkggXE5e2yk"
+                  src="https://www.youtube.com/embed/yAkVfopBbN0?autoplay=1&start=160"
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
