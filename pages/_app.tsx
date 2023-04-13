@@ -106,6 +106,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <GlobalStyles />
         <TextFiltersProvider />
         {getLayout(<Component {...pageProps} />)}
+        <div id="portal-root" />
       </ThemeProvider>
     </>
   );

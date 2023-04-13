@@ -154,7 +154,7 @@ export const Interactive = () => {
                   filter: `url(#${filterId})`,
                   maxWidth: "100%",
                   height: "auto",
-                  transform: "translateZ(0",
+                  transform: "translateZ(0)",
                 }}
               />
             </HStack>

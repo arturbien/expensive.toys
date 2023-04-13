@@ -24,6 +24,7 @@ import SVGFilterHeatMaps from "../../components/SVGFilterHeatMaps";
 import Typography from "../../components/UI/Typography";
 import FancyRevealEffects from "../../components/FancyRevealEffects";
 import RGBSplitDemo from "../../components/RGBSplitDemo";
+import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
 
 const Card = styled.div`
   position: relative;
@@ -139,6 +140,7 @@ const renderers = {
   Separator,
   FancyRevealEffects,
   RGBSplitDemo,
+  AmbilightEffectDemo,
   ...components,
 };
 
