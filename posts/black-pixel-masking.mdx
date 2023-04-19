@@ -152,12 +152,13 @@ to get the final result.
 <br />
 <br />
 <Separator />
+
 ## Limitations
 
 This technique seems to work reliably on all major browsers, but it has some limitations:
 
 - you can only use black or white color to clip elements,
-- the filter will not clip the **backdrop blur**.
+- the filter will not clip the **backdrop blur**,
   It will remove the color from marked areas, but the backdrop blur will stay
   (as opposed to CSS **mask** or **clip-path** which will remove the blur in the clipped area).
 - the masked area is slightly thicker than black pixels on the target element due to
