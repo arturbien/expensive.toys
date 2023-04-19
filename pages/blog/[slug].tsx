@@ -25,6 +25,7 @@ import Typography from "../../components/UI/Typography";
 import FancyRevealEffects from "../../components/FancyRevealEffects";
 import RGBSplitDemo from "../../components/RGBSplitDemo";
 import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
+import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
 
 const Card = styled.div`
   position: relative;
@@ -141,6 +142,7 @@ const renderers = {
   FancyRevealEffects,
   RGBSplitDemo,
   AmbilightEffectDemo,
+  BlackPixelMaskingDemo,
   ...components,
 };
 
@@ -179,6 +181,7 @@ export default function PostPage({ source, frontMatter }) {
                   alt={frontMatter.heroImgAlt}
                   width={1280}
                   height={675}
+                  priority
                   // blurDataURL="data:..." automatically provided
                   // placeholder="blur" // Optional blur-up while loading
                 />
