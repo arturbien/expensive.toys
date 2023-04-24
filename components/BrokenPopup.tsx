@@ -2,7 +2,9 @@ import React from "react";
 import { Button, Window, WindowContent, WindowHeader } from "react95";
 import styled from "styled-components";
 
-const Outer = styled.div``;
+const Outer = styled.div`
+  position: relative;
+`;
 const Inner = styled.div``;
 const Win95Left = styled.div`
   filter: drop-shadow(2px 0px 0px ${(p) => p.theme.borderDark})
@@ -36,8 +38,8 @@ const bayerFilter = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAA
 const GlassMaterial = styled.div`
   background: rgba(255, 255, 255, 0.27);
   border-radius: 16px;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px) saturate(170%);
+  -webkit-backdrop-filter: blur(5px) saturate(170%);
   border: 1px solid rgba(255, 255, 255, 0.31);
 `;
 
@@ -75,7 +77,7 @@ const Glass = styled(GlassMaterial)`
     inset: 1px;
     background: url(${bayerFilter});
     opacity: 0.5;
-    background-size: 50px;
+    background-size: 10px;
     border-radius: 14px;
     mix-blend-mode: overlay;
   }
