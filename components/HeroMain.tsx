@@ -43,10 +43,8 @@ const HeroMain = () => {
           <div className="center-monitor">
             <Monitor
               backgroundStyles={{
-                background: "#dead25",
                 backgroundImage: `url(https://i.pinimg.com/originals/a7/a2/0e/a7a20e9a4c0c5ed6af6cbaf3c268d701.png)`,
                 backgroundSize: "cover",
-                backgroundBlendMode: "multiply",
               }}
             />
           </div>

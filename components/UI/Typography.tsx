@@ -3,11 +3,13 @@ import { createHatchedBackground } from "react95/dist/common";
 import { Theme } from "react95/dist/types";
 import styled from "styled-components";
 
-const StyledEmbossedText = styled.div`
+const StyledEmbossedText = styled.div<{ pixelSize?: number }>`
   position: relative;
   color: ${(p) => p.theme.borderDark};
-  text-shadow: -1px -1px 0px ${(p) => p.theme.materialText},
-    1px 1px 0px ${(p) => p.theme.borderLightest};
+  --pixel-size: ${(p) => p.pixelSize || 1}px;
+  text-shadow: calc(-1 * var(--pixel-size)) calc(-1 * var(--pixel-size)) 0px
+      ${(p) => p.theme.materialText},
+    var(--pixel-size) var(--pixel-size) 0px ${(p) => p.theme.borderLightest};
   font-style: italic;
   &::before {
     display: block;
@@ -20,7 +22,7 @@ const StyledEmbossedText = styled.div`
     ${(p) =>
       createHatchedBackground({
         mainColor: p.theme.material,
-        pixelSize: 1,
+        pixelSize: p.pixelSize || 1,
       })}
     background-clip: text;
     -webkit-background-clip: text;
@@ -31,17 +33,27 @@ const StyledEmbossedText = styled.div`
 
 const EmbossedText = ({
   children,
+  ...otherProps
 }: React.ComponentProps<typeof StyledEmbossedText> & {
   children: string;
 }) => {
   return (
-    <StyledEmbossedText data-text={children}>{children}</StyledEmbossedText>
+    <StyledEmbossedText data-text={children} {...otherProps}>
+      {children}
+    </StyledEmbossedText>
   );
 };
 
-const BaseFont = styled.span<{ color?: keyof Theme }>`
+const BaseFont = styled.span<{ color?: keyof Theme; disabled?: boolean }>`
   font-family: arial;
-  color: ${(p) => (p.color ? p.theme[p.color] : p.theme.materialText)};
+  color: ${(p) =>
+    p.disabled
+      ? p.theme.materialTextDisabled
+      : p.color
+      ? p.theme[p.color]
+      : p.theme.materialText};
+  text-shadow: ${(p) =>
+    p.disabled ? `1px 1px 0px ${p.theme.materialTextDisabledShadow}` : "none"};
   a {
     /* TODO: fix duplicated anchor styles */
     color: ${(p) => p.theme.anchor};

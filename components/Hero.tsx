@@ -20,13 +20,7 @@ const Hero = () => (
 
         <div className="right-monitor">
           <ThemeProvider theme={maple}>
-            <Monitor
-              backgroundStyles={{
-                backgroundColor: "#dead25",
-                backgroundImage: `url(https://i.pinimg.com/originals/a7/a2/0e/a7a20e9a4c0c5ed6af6cbaf3c268d701.png)`,
-                backgroundSize: "cover",
-              }}
-            />
+            <Monitor backgroundStyles={{}} />
           </ThemeProvider>
         </div>
 
@@ -37,7 +31,6 @@ const Hero = () => (
               backgroundColor: "#dead25",
               backgroundImage: `url(https://i.pinimg.com/originals/a7/a2/0e/a7a20e9a4c0c5ed6af6cbaf3c268d701.png)`,
               backgroundSize: "cover",
-              backgroundBlendMode: "multiply",
             }}
           />
           {/* </ThemeProvider> */}
