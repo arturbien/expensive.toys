@@ -166,7 +166,7 @@ interface Post {
 }
 
 export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
-  const postsFodler = "./posts";
+  const postsFodler = "./toys";
   const files = fs.readdirSync(postsFodler);
 
   const posts = files

@@ -15,7 +15,7 @@ import styled from "styled-components";
 import CTAButton from "../../components/UI/CTAButton";
 import DisabledIconsDemo from "../../components/DisabledIconsDemo";
 import { Center, Grid, Normal } from "../../components/Layout";
-import { postFilePaths, POSTS_PATH } from "../../utils/mdxUtils";
+import { toysFilePaths, TOYS_PATH } from "../../utils/mdxUtils";
 import Image from "next/image";
 import T from "../../components/UI/Typography";
 import Code from "../../components/UI/Code";
@@ -195,7 +195,7 @@ export default function PostPage({ source, frontMatter }) {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const postFilePath = path.join(POSTS_PATH, `${params.slug}.mdx`);
+  const postFilePath = path.join(TOYS_PATH, `${params.slug}.mdx`);
   const source = fs.readFileSync(postFilePath);
 
   const { content, data } = matter(source);
@@ -226,7 +226,7 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
-  const paths = postFilePaths
+  const paths = toysFilePaths
     // Remove file extensions for page paths
     .map((path) => path.replace(/\.mdx?$/, ""))
     // Map the path into the static paths object required by Next.js
