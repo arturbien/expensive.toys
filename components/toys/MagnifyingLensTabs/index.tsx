@@ -1,5 +1,5 @@
 import React from "react";
-import { Frame } from "react95";
+import { Checkbox, Frame } from "react95";
 import styled from "styled-components";
 import { HStack } from "../../UI/Stack";
 import MagnifyingLensTabs from "./MagnifyingLensTabs";
@@ -92,6 +92,9 @@ const Demo = () => {
           </HStack>
         </Workspace>
       </Frame>
+      <HStack pl={4}>
+        <Checkbox label="Slow motion" />
+      </HStack>
     </Frame>
   );
 };

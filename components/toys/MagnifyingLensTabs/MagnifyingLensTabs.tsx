@@ -79,6 +79,7 @@ const Nav = styled.div`
 
 const Tab = styled.button`
   all: unset;
+  -webkit-font-smoothing: antialiased;
   font-weight: 500;
   border-radius: 999px;
   padding: var(--pv) var(--ph);
@@ -91,7 +92,7 @@ const Tab = styled.button`
   color: #0a0a0a;
   :hover,
   :active {
-    opacity: 0.6;
+    opacity: 0.7;
   }
   isolation: isolate;
   text-shadow: 0px 1px 0.5px rgba(0, 0, 0, 0.2),
@@ -112,7 +113,7 @@ const MagnifierNav = styled(Nav)`
   transition-duration: var(--duration);
   transition-property: transform-origin;
   transition-timing-function: ease;
-  will-change: transform-origin;
+  /* will-change: transform-origin; */
 
   padding: var(--safe-pad);
   text-shadow: 0.25px 0.25px 0px rgba(255, 0, 0, 0.8), -0.25px -0.25px 0px cyan;
@@ -138,7 +139,7 @@ const Mask = styled.div`
   transition-duration: var(--duration);
   transition-property: left, width;
   transition-timing-function: ease;
-  will-change: left, width;
+  /* will-change: left, width; */
   contain: strict;
   isolation: isolate;
   box-sizing: border-box;
