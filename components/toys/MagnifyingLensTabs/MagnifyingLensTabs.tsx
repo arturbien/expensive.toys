@@ -207,10 +207,12 @@ const MagnifyingLensTabs = ({
   tabs,
   selectedTabId,
   onSelectedTabChange,
+  slowMotion,
 }: {
   tabs: Tab[];
   selectedTabId: string;
   onSelectedTabChange: (tab: Tab) => void;
+  slowMotion: boolean;
 }) => {
   const wrapperRef = React.useRef<HTMLDivElement>(null);
   const navRef = React.useRef<HTMLDivElement>(null);
@@ -256,9 +258,12 @@ const MagnifyingLensTabs = ({
 
   React.useEffect(() => {
     setTimeout(() => {
-      wrapperRef.current.style.setProperty("--duration", "0.6s");
+      wrapperRef.current.style.setProperty(
+        "--duration",
+        slowMotion ? "4s" : "0.6s"
+      );
     }, 10);
-  }, []);
+  }, [slowMotion]);
 
   let { isFocusVisible } = useFocusVisible();
   const isFocusVisibleRef = React.useRef(isFocusVisible);

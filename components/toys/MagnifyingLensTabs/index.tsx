@@ -62,6 +62,8 @@ const items = [
 ];
 const Demo = () => {
   const [selectedTabId, setSelectedTabId] = React.useState(items[0].id);
+  const [slowMotion, setSlowMotion] = React.useState(false);
+
   return (
     <Frame
       style={{
@@ -88,12 +90,17 @@ const Demo = () => {
               selectedTabId={selectedTabId}
               onSelectedTabChange={(tab) => setSelectedTabId(tab.id)}
               tabs={items}
+              slowMotion={slowMotion}
             />
           </HStack>
         </Workspace>
       </Frame>
       <HStack pl={4}>
-        <Checkbox label="Slow motion" />
+        <Checkbox
+          label="Slow motion"
+          checked={slowMotion}
+          onChange={(e) => setSlowMotion(e.target.checked)}
+        />
       </HStack>
     </Frame>
   );
