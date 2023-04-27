@@ -258,7 +258,7 @@ const AmbilightEffect = () => {
             {/* {images.map((imgSrc) => (
               <img src={imgSrc} alt="" />
             ))} */}
-            <img src={images[imageIndex]} alt="" />
+            {/* <img src={images[imageIndex]} alt="" /> */}
           </ImagePreview>
         </Canvas>
         <Sidebar>

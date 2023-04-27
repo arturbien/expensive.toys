@@ -42,7 +42,7 @@ const NavButtons = styled.nav`
 
 const pages = [
   { name: "Blog", href: "/blog" },
-  // { name: "Contact", href: "/contact" },
+  { name: "Toys", href: "/toys" },
 ];
 
 const Navbar = () => {

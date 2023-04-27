@@ -9,3 +9,12 @@ export const postFilePaths = fs
   .readdirSync(POSTS_PATH)
   // Only include md(x) files
   .filter((path) => /\.mdx?$/.test(path));
+
+// TOYS_PATH is useful when you want to get the path to a specific file
+export const TOYS_PATH = path.join(process.cwd(), "toys");
+
+// postFilePaths is the list of all mdx files inside the TOYS_PATH directory
+export const toysFilePaths = fs
+  .readdirSync(TOYS_PATH)
+  // Only include md(x) files
+  .filter((path) => /\.mdx?$/.test(path));
