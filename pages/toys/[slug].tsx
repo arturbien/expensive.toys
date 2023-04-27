@@ -26,7 +26,7 @@ import FancyRevealEffects from "../../components/FancyRevealEffects";
 import RGBSplitDemo from "../../components/RGBSplitDemo";
 import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
 import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
-import CyclopLensTabs from "../../components/craft/CyclopLensTabs";
+import MagnifyingLensTabs from "../../components/toys/MagnifyingLensTabs";
 
 const Card = styled.div`
   position: relative;
@@ -137,8 +137,8 @@ const renderers = {
   AmbilightEffectDemo,
   BlackPixelMaskingDemo,
 
-  // craft
-  CyclopLensTabs,
+  // toys
+  MagnifyingLensTabs,
   ...components,
 };
 

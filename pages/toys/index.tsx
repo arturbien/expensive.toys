@@ -28,7 +28,7 @@ const Post = ({
   return (
     <VStack as="article" gap={20} pt={32} pb={32}>
       <VStack gap={4}>
-        <Link href={`/craft/${slug}`}>
+        <Link href={`/toys/${slug}`}>
           <T.H2 color="anchor" style={{ textDecoration: "underline" }}>
             {title}
           </T.H2>
@@ -44,7 +44,7 @@ const Post = ({
   );
 };
 
-const Blog = ({ posts }: { posts: Post[] }) => {
+const Toys = ({ posts }: { posts: Post[] }) => {
   const { filter } = useRouter().query;
   const router = useRouter();
 
@@ -68,13 +68,13 @@ const Blog = ({ posts }: { posts: Post[] }) => {
   return (
     <>
       <Head>
-        <title>Blog | Artur Bień</title>
+        <title>Toys | Artur Bień</title>
         <meta property="og:type" content="website" />
         <meta property="og:image:width" content="1280" />
         <meta property="og:image:height" content="675" />
 
         {/* <meta name="description" content={frontMatter.abstract} /> */}
-        <meta name="og:title" content={"Blog | Artur Bień"} />
+        <meta name="og:title" content={"Toys | Artur Bień"} />
         <meta
           name="og:description"
           content={"Building user interfaces for fun."}
@@ -97,7 +97,7 @@ const Blog = ({ posts }: { posts: Post[] }) => {
           <Normal>
             <VStack mt={96} mb={96}>
               <HStack justifyContent={"space-between"} alignItems="baseline">
-                <T.H1>Craft</T.H1>
+                <T.H1>Toys</T.H1>
                 <T.BodyLarge>{filteredPosts.length} Articles</T.BodyLarge>
               </HStack>
               {tags.length && (
@@ -106,7 +106,7 @@ const Blog = ({ posts }: { posts: Post[] }) => {
                     <Button
                       variant="raised"
                       active={!filterTags.length}
-                      onClick={() => router.push(`/blog`)}
+                      onClick={() => router.push(`/toys`)}
                     >
                       All
                     </Button>
@@ -117,7 +117,7 @@ const Blog = ({ posts }: { posts: Post[] }) => {
                         key={tag}
                         active={filterTags.includes(tag)}
                         onClick={() =>
-                          router.push(`/blog?filter=${encodeURIComponent(tag)}`)
+                          router.push(`/toys?filter=${encodeURIComponent(tag)}`)
                         }
                       >
                         {tag}
@@ -148,7 +148,7 @@ const Blog = ({ posts }: { posts: Post[] }) => {
   );
 };
 
-export default Blog;
+export default Toys;
 
 interface Post {
   frontmatter: {
@@ -197,7 +197,7 @@ export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
         // @ts-expect-error
         new Date(a.frontmatter.publishedOn)
     )
-    .filter((p) => p.frontmatter.layout === "Craft");
+    .filter((p) => p.frontmatter.layout === "Toys");
 
   return {
     props: {
