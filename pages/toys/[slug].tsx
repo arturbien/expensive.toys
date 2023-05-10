@@ -30,6 +30,7 @@ import MagnifyingLensTabs from "../../components/toys/MagnifyingLensTabs";
 import Stickers from "../../components/toys/Stickers";
 import Reactions from "../../components/toys/Reactions";
 import { SITE_URL } from "../../utils";
+import ChromadynamicaManipulable from "../../components/toys/ChromadynamicaManipulable";
 
 const Card = styled.div`
   position: relative;
@@ -144,6 +145,7 @@ const renderers = {
   MagnifyingLensTabs,
   Stickers,
   Reactions,
+  ChromadynamicaManipulable,
   ...components,
 };
 
