@@ -4,72 +4,13 @@ import Image from "next/image";
 import React from "react";
 import { browserName } from "react-device-detect";
 import { renderToString } from "react-dom/server";
-import { Button, Checkbox, Separator, Slider, Tooltip } from "react95";
+import { Button, Checkbox, Separator, Tooltip } from "react95";
 import styled, { keyframes } from "styled-components";
 import ThermalVisionHero from "../public/svg-heat-maps-hero.png";
 import SVGEffectEditor from "./UI/SVGEffectEditor";
 import { HStack, VStack } from "./UI/Stack";
-
-function process(str) {
-  if (typeof window === "undefined") return "";
-  var div = document.createElement("div");
-  div.innerHTML = str.trim();
-
-  return format(div, 0).innerHTML;
-}
-
-function format(node: any, level) {
-  var indentBefore = new Array(level++ + 1).join("  "),
-    indentAfter = new Array(level - 1).join("  "),
-    textNode;
-
-  for (var i = 0; i < node.children.length; i++) {
-    textNode = document.createTextNode("\n" + indentBefore);
-    node.insertBefore(textNode, node.children[i]);
-
-    format(node.children[i], level);
-
-    if (node.lastElementChild == node.children[i]) {
-      textNode = document.createTextNode("\n" + indentAfter);
-      node.appendChild(textNode);
-    }
-  }
-
-  return node;
-}
-
-const SliderControl = ({
-  label,
-  value,
-  getLabelValue,
-  ...otherProps
-}: {
-  label: string;
-  getLabelValue?: (value: number) => string;
-} & React.ComponentProps<typeof Slider>) => {
-  return (
-    <HStack
-      as="label"
-      alignItems="center"
-      justifyContent="space-between"
-      gap={24}
-      pr={24}
-    >
-      <span style={{ width: 80, flexShrink: 0 }}>{label}</span>
-      <HStack alignItems="center" gap={24} fullWidth>
-        <span style={{ width: 40, flexShrink: 0 }}>
-          {getLabelValue ? getLabelValue(value) : value}
-        </span>
-
-        <Slider
-          value={value}
-          style={{ margin: 0, maxWidth: 500 }}
-          {...otherProps}
-        />
-      </HStack>
-    </HStack>
-  );
-};
+import { SliderControl } from "./SliderControl";
+import process from "../lib/process";
 
 const BasicDemo = () => {
   const codeRef = React.useRef<HTMLDivElement>(null);
