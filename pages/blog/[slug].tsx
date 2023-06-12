@@ -26,6 +26,7 @@ import FancyRevealEffects from "../../components/FancyRevealEffects";
 import RGBSplitDemo from "../../components/RGBSplitDemo";
 import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
 import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
+import BlurVignetteDemo from "../../components/BlurVignetteDemo";
 
 const Card = styled.div`
   position: relative;
@@ -143,6 +144,7 @@ const renderers = {
   RGBSplitDemo,
   AmbilightEffectDemo,
   BlackPixelMaskingDemo,
+  BlurVignetteDemo,
   ...components,
 };
 
