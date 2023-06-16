@@ -27,6 +27,7 @@ import RGBSplitDemo from "../../components/RGBSplitDemo";
 import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
 import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
 import MagnifyingLensTabs from "../../components/toys/MagnifyingLensTabs";
+import Stickers from "../../components/toys/Stickers";
 
 const Card = styled.div`
   position: relative;
@@ -139,6 +140,7 @@ const renderers = {
 
   // toys
   MagnifyingLensTabs,
+  Stickers,
   ...components,
 };
 
