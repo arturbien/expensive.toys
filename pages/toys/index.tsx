@@ -11,6 +11,7 @@ import { Center, Grid, Normal } from "../../components/Layout";
 import { HStack, VStack } from "../../components/UI/Stack";
 import T from "../../components/UI/Typography";
 import Head from "next/head";
+import { getSortedPosts } from "../../utils/mdxUtils";
 
 const Post = ({
   title,
@@ -166,38 +167,7 @@ interface Post {
 }
 
 export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
-  const postsFodler = "./toys";
-  const files = fs.readdirSync(postsFodler);
-
-  const posts = files
-    .map((file) => {
-      const filePath = `${postsFodler}/${file}`;
-      const { name: fileName } = path.parse(filePath);
-      const content = fs.readFileSync(filePath, "utf-8");
-      const { data, content: body } = matter(content);
-
-      return {
-        frontmatter: {
-          ...data,
-          publishedOn: new Date(data.publishedOn).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-        },
-        body,
-        slug: fileName,
-      } as Post;
-    })
-    .filter((p) => p.frontmatter.isPublished)
-    .sort(
-      (a, b) =>
-        // @ts-expect-error
-        new Date(b.frontmatter.publishedOn) -
-        // @ts-expect-error
-        new Date(a.frontmatter.publishedOn)
-    )
-    .filter((p) => p.frontmatter.layout === "Toys");
+  const posts = getSortedPosts("Toy");
 
   return {
     props: {
