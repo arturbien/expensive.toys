@@ -12,6 +12,7 @@ import { HStack, VStack } from "../../components/UI/Stack";
 import T from "../../components/UI/Typography";
 import Head from "next/head";
 import { getSortedPosts, Article } from "../../utils/mdxUtils";
+import generateRssFeed from "../../utils/generateRSSFeed";
 
 const BlogPost = ({
   title,
@@ -152,6 +153,7 @@ const Blog = ({ posts }: { posts: Article[] }) => {
 export default Blog;
 
 export const getStaticProps = async () => {
+  await generateRssFeed();
   const posts = getSortedPosts("Article");
 
   return {
