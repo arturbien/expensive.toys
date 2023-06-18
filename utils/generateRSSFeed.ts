@@ -1,10 +1,9 @@
 import RSS from "rss";
 import { getSortedPosts } from "./mdxUtils";
 import fs from "fs";
+import { SITE_URL } from ".";
 
 export default async function generateRssFeed() {
-  const site_url = process.env.SITE_URL || "https://expensive.toys";
-
   const allArticles = await getSortedPosts("Article");
   const allToys = await getSortedPosts("Toy");
 
@@ -13,9 +12,9 @@ export default async function generateRssFeed() {
     title: "Blog | Artur Bień",
     description: "Cool experiments and articles about React and CSS.",
     language: "en-us",
-    site_url: site_url,
-    feed_url: `${site_url}/rss.xml`,
-    // image_url: `${site_url}/logo.png`,
+    site_url: SITE_URL,
+    feed_url: `${SITE_URL}/rss.xml`,
+    // image_url: `${SITE_URL}/logo.png`,
     pubDate: new Date(),
     copyright: `All rights reserved ${new Date().getFullYear()}, Artur Bień`,
   };
@@ -24,7 +23,7 @@ export default async function generateRssFeed() {
   // TODO: categody for each post (tags)?
   const author = "Artur Bień";
   const articlesItems = allArticles.map((post) => {
-    const url = `${site_url}/blog/${post.slug}`;
+    const url = `${SITE_URL}/blog/${post.slug}`;
     return {
       title: post.frontmatter.title,
       description: post.frontmatter.abstract,
@@ -35,7 +34,7 @@ export default async function generateRssFeed() {
     };
   });
   const toysItems = allToys.map((post) => {
-    const url = `${site_url}/toys/${post.slug}`;
+    const url = `${SITE_URL}/toys/${post.slug}`;
 
     return {
       title: post.frontmatter.title,

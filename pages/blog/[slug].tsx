@@ -27,6 +27,7 @@ import RGBSplitDemo from "../../components/RGBSplitDemo";
 import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
 import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
 import BlurVignetteDemo from "../../components/BlurVignetteDemo";
+import { SITE_URL } from "../../utils";
 
 const Card = styled.div`
   position: relative;
@@ -217,7 +218,7 @@ export const getStaticProps = async ({ params }) => {
       source: mdxSource,
       frontMatter: {
         ...data,
-        heroImgAbsolute: "https://expensive.toys" + data.heroImg,
+        heroImgAbsolute: SITE_URL + data.heroImg,
         publishedOn: new Date(data.publishedOn).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",

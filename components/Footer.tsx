@@ -5,6 +5,7 @@ import eggplant from "react95/dist/themes/eggplant";
 import styled, { ThemeProvider } from "styled-components";
 import { Center, Grid } from "./Layout";
 import { ExpensiveToys } from "./UI/Typography";
+import { SITE_URL } from "../utils";
 
 const StyledFooter = styled(Frame)`
   width: 100%;
@@ -73,6 +74,13 @@ const Footer = () => {
                 rel="noreferrer"
               >
                 LinkedIn
+              </Anchor>
+              <Anchor
+                href={SITE_URL + "/rss.xml"}
+                target="_blank"
+                rel="noreferrer"
+              >
+                RSS
               </Anchor>
             </Links>
           </Grid>

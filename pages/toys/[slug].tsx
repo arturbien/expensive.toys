@@ -28,6 +28,7 @@ import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
 import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
 import MagnifyingLensTabs from "../../components/toys/MagnifyingLensTabs";
 import Stickers from "../../components/toys/Stickers";
+import { SITE_URL } from "../../utils";
 
 const Card = styled.div`
   position: relative;
@@ -216,7 +217,7 @@ export const getStaticProps = async ({ params }) => {
       source: mdxSource,
       frontMatter: {
         ...data,
-        heroImgAbsolute: "https://expensive.toys" + data.heroImg,
+        heroImgAbsolute: SITE_URL + data.heroImg,
         publishedOn: new Date(data.publishedOn).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
