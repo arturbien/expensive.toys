@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+// TODO: holo effect? https://codepen.io/simeydotme/pen/OJaVzzv
 const OutlinedStickerWrapper = styled.div`
   user-select: none;
   display: inline-block;
@@ -144,11 +145,12 @@ export const TextSticker = ({
   );
 };
 
-const PuffyStickerWrapper = styled.div`
+const PuffyStickerWrapper = styled.div<{ shadow: boolean }>`
   position: relative;
   display: inline-block;
   user-select: none;
-  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.45));
+  filter: ${(p) =>
+    p.shadow ? `drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.45))` : "none"};
 
   & > svg {
     position: fixed;
@@ -164,10 +166,12 @@ const PuffyStickerWrapper = styled.div`
 
 export const PuffySticker = ({
   children,
+  specularConstant = 0.5,
   ...otherProps
-}: { children: React.ReactNode } & React.ComponentProps<
-  typeof PuffyStickerWrapper
->) => {
+}: {
+  children: React.ReactNode;
+  specularConstant?: number;
+} & React.ComponentProps<typeof PuffyStickerWrapper>) => {
   const filterId = React.useId();
   const filterRef = React.useRef<SVGFilterElement>(null);
   const childrenWrapperRef = React.useRef<HTMLDivElement>(null);
@@ -208,7 +212,7 @@ export const PuffySticker = ({
             // represents the height of the surface for a light filter primitive
             surfaceScale="5"
             // The bigger the value the bigger the reflection
-            specularConstant="0.5"
+            specularConstant={specularConstant}
             // controls the focus for the light source. The bigger the value the brighter the light
             specularExponent="120"
             lightingColor="#ffffff"

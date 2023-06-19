@@ -28,6 +28,7 @@ import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
 import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
 import MagnifyingLensTabs from "../../components/toys/MagnifyingLensTabs";
 import Stickers from "../../components/toys/Stickers";
+import Reactions from "../../components/toys/Reactions";
 import { SITE_URL } from "../../utils";
 
 const Card = styled.div`
@@ -142,6 +143,7 @@ const renderers = {
   // toys
   MagnifyingLensTabs,
   Stickers,
+  Reactions,
   ...components,
 };
 
