@@ -73,12 +73,6 @@ const Ruler = styled.div`
   }
 `;
 
-const items = [
-  { label: "Sweets", id: "Sweets" },
-  { label: "Games", id: "Games" },
-  { label: "Toys", id: "Toys" },
-  { label: "Balloons", id: "Balloons" },
-];
 const Demo = () => {
   const [selectedEmoji, setSelectedEmoji] = React.useState(emojis[0]);
   const [slowMotion, setSlowMotion] = React.useState(false);
@@ -128,7 +122,10 @@ const Demo = () => {
               stickers
             </div>
           </Sticker>
-          <PuffySticker style={{ position: "absolute", left: 130, top: 80 }}>
+          <PuffySticker
+            shadow
+            style={{ position: "absolute", left: 130, top: 80 }}
+          >
             <div
               style={{
                 fontSize: 90,
@@ -146,7 +143,10 @@ const Demo = () => {
               ℳ
             </div>
           </PuffySticker>
-          <PuffySticker style={{ position: "absolute", left: 190, top: -90 }}>
+          <PuffySticker
+            shadow
+            style={{ position: "absolute", left: 190, top: -90 }}
+          >
             <div
               style={{
                 fontSize: 92,
@@ -156,7 +156,10 @@ const Demo = () => {
               🔥
             </div>
           </PuffySticker>
-          <PuffySticker style={{ position: "absolute", left: 50, top: 70 }}>
+          <PuffySticker
+            shadow
+            style={{ position: "absolute", left: 50, top: 70 }}
+          >
             <div
               style={{
                 fontSize: 62,
