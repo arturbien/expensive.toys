@@ -28,6 +28,8 @@ import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
 import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
 import BlurVignetteDemo from "../../components/BlurVignetteDemo";
 import { SITE_URL } from "../../utils";
+import ViewCounter from "../../components/ViewCounter";
+import { HStack } from "../../components/UI/Stack";
 
 const Card = styled.div`
   position: relative;
@@ -190,6 +192,13 @@ export default function PostPage({ source, frontMatter }) {
                 />
               </Card>
               <MDXRemote {...source} components={renderers} />
+            </Normal>
+          </Grid>
+          <Grid>
+            <Normal>
+              <HStack justifyContent="center" mt={48}>
+                <ViewCounter />
+              </HStack>
             </Normal>
           </Grid>
         </Article>
