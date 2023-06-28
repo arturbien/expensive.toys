@@ -41,7 +41,7 @@ const BlogPost = ({
         <HStack>
           <T.BodySmall color="materialTextDisabled">
             <span>{publishedOn}</span> • {tags.join(" • ")}{" "}
-            {views ? `• ${views}` : ""}
+            {views ? `• ${views.toLocaleString("us")}` : ""}
           </T.BodySmall>
         </HStack>
       </VStack>
