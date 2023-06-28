@@ -80,7 +80,6 @@ const Blog = ({ posts }: { posts: Article[] }) => {
         const { data } = await fetch(`/api/blog-page-views`).then((res) =>
           res.json()
         );
-        console.log({ data });
         setPageViewsPerSlug(data);
       } catch (e) {
         console.log(e);
