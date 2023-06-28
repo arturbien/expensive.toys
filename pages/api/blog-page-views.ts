@@ -3,18 +3,16 @@ import { BetaAnalyticsDataClient } from "@google-analytics/data";
 
 type Data =
   | {
-      pageViews: number;
+      data: any;
     }
   | {
       error: { message: string };
     };
 
-const getPageViews = async (
+const getBlogPageViews = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) => {
-  const slug = req.query.slug;
-
   try {
     const analyticsDataClient = new BetaAnalyticsDataClient({
       credentials: {
@@ -37,27 +35,41 @@ const getPageViews = async (
           name: "screenPageViews",
         },
       ],
+      dimensions: [
+        {
+          name: "pagePath",
+        },
+      ],
       dimensionFilter: {
         filter: {
           fieldName: "pagePath",
           stringFilter: {
-            matchType: "EXACT",
-            value: slug.toString(),
+            matchType: "BEGINS_WITH",
+            value: "/blog/",
           },
         },
       },
     });
 
-    const pageViews = response.rowCount
-      ? parseInt(response.rows[0].metricValues[0].value)
-      : 0;
+    const pageViews = response.rows.reduce((acc, row, index) => {
+      const slug = row.dimensionValues[0].value.replace("/blog/", "");
+      const pageViews = parseInt(row.metricValues[0].value);
+      if (slug in acc) {
+        acc[slug] += pageViews;
+        return acc;
+      } else {
+        acc[slug] = pageViews;
+      }
+
+      return acc;
+    }, {});
 
     res.status(200).json({
-      pageViews,
+      data: pageViews,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
 
-export default getPageViews;
+export default getBlogPageViews;

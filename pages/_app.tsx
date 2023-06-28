@@ -54,10 +54,13 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
 
   React.useEffect(() => {
+    if (isDevelopment) return;
     const handleRouteChange = (url: string) => {
       ga.pageview(url);
     };
@@ -81,15 +84,17 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${ga.GA_TRACKING_ID}`}
-      />
-      <Script
-        id="google-analytics"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+      {!isDevelopment && (
+        <>
+          <Script
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtag/js?id=${ga.GA_TRACKING_ID}`}
+          />
+          <Script
+            id="google-analytics"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -98,9 +103,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
               page_path: window.location.pathname,
             });
             `,
-        }}
-      />
-      <Analytics />
+            }}
+          />
+        </>
+      )}
+      <Analytics mode={isDevelopment ? "development" : "production"} />
 
       <ThemeProvider theme={original}>
         <GlobalStyles />

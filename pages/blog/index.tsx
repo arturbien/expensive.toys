@@ -13,6 +13,7 @@ import T from "../../components/UI/Typography";
 import Head from "next/head";
 import { getSortedPosts, Article } from "../../utils/mdxUtils";
 import generateRssFeed from "../../utils/generateRSSFeed";
+import React from "react";
 
 const BlogPost = ({
   title,
@@ -20,12 +21,14 @@ const BlogPost = ({
   slug,
   publishedOn,
   tags,
+  views,
 }: {
   title: string;
   abstract: string;
   slug: string;
   publishedOn: string;
   tags: string[];
+  views: number;
 }) => {
   return (
     <VStack as="article" gap={20} pt={32} pb={32}>
@@ -37,7 +40,8 @@ const BlogPost = ({
         </Link>
         <HStack>
           <T.BodySmall color="materialTextDisabled">
-            <span>{publishedOn}</span> • {tags.join(" • ")}
+            <span>{publishedOn}</span> • {tags.join(" • ")}{" "}
+            {views ? `• ${views}` : ""}
           </T.BodySmall>
         </HStack>
       </VStack>
@@ -66,6 +70,28 @@ const Blog = ({ posts }: { posts: Article[] }) => {
     });
     return tags;
   }, []);
+
+  const [pageViewsPerSlug, setPageViewsPerSlug] = React.useState(
+    {} as Record<string, number>
+  );
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await fetch(`/api/blog-page-views`).then((res) =>
+          res.json()
+        );
+        console.log({ data });
+        setPageViewsPerSlug(data);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
+
+  const articlesWithPageViews = filteredPosts.map((post) => ({
+    ...post,
+    pageViews: pageViewsPerSlug[post.slug] ?? 0,
+  }));
 
   return (
     <>
@@ -100,7 +126,9 @@ const Blog = ({ posts }: { posts: Article[] }) => {
             <VStack mt={96} mb={96}>
               <HStack justifyContent={"space-between"} alignItems="baseline">
                 <T.H1>Blog</T.H1>
-                <T.BodyLarge>{filteredPosts.length} Articles</T.BodyLarge>
+                <T.BodyLarge>
+                  {articlesWithPageViews.length} Articles
+                </T.BodyLarge>
               </HStack>
               {tags.length && (
                 <HStack mt={16} gap={4}>
@@ -129,7 +157,7 @@ const Blog = ({ posts }: { posts: Article[] }) => {
                 </HStack>
               )}
               <VStack as="ul" mt={48}>
-                {filteredPosts.map((post) => (
+                {articlesWithPageViews.map((post) => (
                   <li key={post.slug}>
                     <BlogPost
                       slug={post.slug}
@@ -137,6 +165,7 @@ const Blog = ({ posts }: { posts: Article[] }) => {
                       abstract={post.frontmatter.abstract}
                       publishedOn={post.frontmatter.publishedOn}
                       tags={post.frontmatter.tags}
+                      views={post.pageViews}
                     />
                     <Separator />
                   </li>
