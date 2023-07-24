@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import useDragRotate from "./useDragRotate";
 import { Draggable } from "gsap/dist/Draggable";
 import gsap from "gsap";
 import useSound from "use-sound";
 import useResizeObserver from "use-resize-observer";
-import { serialize } from "v8";
+import windowsWallpaper from "../../../public/windows-wallpaper.png";
 
 gsap.registerPlugin(Draggable);
 
 const Center = styled.div`
+  position: relative;
   flex-shrink: 0;
-  contain: strict;
   isolation: isolate;
   width: auto;
   height: auto;
@@ -61,9 +60,9 @@ const Wheel = styled.div<{ sizeRatio: number }>`
       rgba(0, 0, 0, 0.45)
     );
     padding: 1px;
-    -webkit-mask: linear-gradient(black, black) content-box content-box,
+    mask: linear-gradient(black, black) content-box content-box,
       linear-gradient(black, black);
-    -webkit-mask-composite: xor;
+    mask-composite: xor;
     border-radius: inherit;
   }
   &:after {
@@ -73,16 +72,16 @@ const Wheel = styled.div<{ sizeRatio: number }>`
       rgba(0, 0, 0, 0.45),
       rgba(255, 255, 255, 0.35)
     );
-    -webkit-mask: linear-gradient(black, black) content-box content-box,
+    mask: linear-gradient(black, black) content-box content-box,
       linear-gradient(black, black);
-    -webkit-mask-composite: xor;
+    mask-composite: xor;
     border-radius: inherit;
     padding: 1px;
   }
   /* overflow: hidden; */
 `;
 
-const Background = styled.div<{ size?: number }>`
+export const Background = styled.div<{ size?: number }>`
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -122,7 +121,7 @@ export const Gradient2 = ({
       <W {...otherProps}>
         <Circle color="yellow" />
         <Circle color="magenta" rotation={120} />
-        <Circle color="blue" rotation={180} />
+        <Circle color="blue" rotation={240} />
         {/* <Red />
         <Blue /> */}
       </W>
@@ -139,38 +138,38 @@ export const Gradient3 = styled(Background)`
     height: ${(p) => p.size + "px"};
     transform: translate(-50%, -50%);
 
-    background-image: url(https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg);
     background-size: 600px 600px;
     background-position: center;
-    background-image: linear-gradient(
-      #010101,
-      #3a045e,
-      #2527ba,
-      #48a1f9,
-      #73f7fe,
-      #e2fde5,
-      #fcfffe,
-      #f8df5e,
-      #e84537,
-      #7e1858,
-      #010101,
-      #39047a,
-      #2e21d7,
-      #3f8ff6,
-      #acfd55,
-      #d5c240,
-      #ea4425,
-      #d12f2a,
-      #6c125d,
-      #010101,
-      #2930dd,
-      #61cffb,
-      #f7ffff,
-      #fefd55,
-      #e83c22,
-      #4a0b31,
-      #010101
-    );
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 700 700' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+      linear-gradient(
+        #010101,
+        #3a045e,
+        #2527ba,
+        #48a1f9,
+        #73f7fe,
+        #e2fde5,
+        #fcfffe,
+        #f8df5e,
+        #e84537,
+        #7e1858,
+        #010101,
+        #39047a,
+        #2e21d7,
+        #3f8ff6,
+        #acfd55,
+        #d5c240,
+        #ea4425,
+        #d12f2a,
+        #6c125d,
+        #010101,
+        #2930dd,
+        #61cffb,
+        #f7ffff,
+        #fefd55,
+        #e83c22,
+        #4a0b31,
+        #010101
+      );
     background-blend-mode: soft-light;
   }
 `;
@@ -185,7 +184,7 @@ export const Gradient1 = styled(Background)`
     transform: translate(-50%, -50%);
 
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 700 700' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
-      url(https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg);
+      url(${windowsWallpaper.src});
     background-size: cover;
     background-position: center;
 
@@ -232,10 +231,12 @@ const DragHandle = styled.div`
 `;
 type Props = {
   steps?: number;
+  angleOffset?: number;
   BackgroundComponent: typeof Background;
 };
 const ChromadynamicaManipulable = ({
   steps = 7,
+  angleOffset = 15,
   BackgroundComponent,
 }: Props) => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -263,6 +264,7 @@ const ChromadynamicaManipulable = ({
         angle={angle}
         size={size}
         BackgroundComponent={BackgroundComponent}
+        angleOffset={angleOffset}
       />
       <DragHandle ref={ref} />
     </Center>
@@ -278,12 +280,13 @@ const Segment = ({
   angle: angleProp,
   BackgroundComponent,
   size,
+  angleOffset,
   ...otherProps
 }: React.ComponentProps<typeof Wheel> & {
   step?: number;
   steps: number;
-  angle?: number;
   size: number;
+  angleOffset: number;
   BackgroundComponent: typeof Background;
 }) => {
   const parentAngle = useAngle();
@@ -297,12 +300,12 @@ const Segment = ({
   React.useLayoutEffect(() => {
     if (parentAngle) {
       setAngle((angle) => {
-        if (parentAngle >= angle + 15) {
+        if (parentAngle >= angle + angleOffset) {
           if (!isStickingRef.current) {
             play();
           }
           isStickingRef.current = true;
-          return parentAngle - 15;
+          return parentAngle - angleOffset;
           //   console.log("SWAG");
         } else if (parentAngle - angle <= 0) {
           if (!isStickingRef.current) {
@@ -317,7 +320,7 @@ const Segment = ({
         return angle;
       });
     }
-  }, [parentAngle, play]);
+  }, [parentAngle, play, angleOffset]);
 
   const stepSize = 1 / steps;
   const sizeRatio = 1 - step * stepSize;
@@ -347,6 +350,7 @@ const Segment = ({
             step={step + 1}
             sizeRatio={sizeRatio}
             size={size}
+            angleOffset={angleOffset}
             BackgroundComponent={BackgroundComponent}
           />
         </AngleContext.Provider>
