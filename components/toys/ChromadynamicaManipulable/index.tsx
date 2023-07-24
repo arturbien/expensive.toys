@@ -4,18 +4,15 @@ import { HStack, VStack } from "../../UI/Stack";
 import ChromadynamicaManipulable, {
   Background,
   Gradient1,
-  Gradient2,
   Gradient3,
   Gradient39,
 } from "./ChromadynamicaManipulable";
 
-type Gradients = "CM-39" | "X" | "Blobs" | "Windows";
+type Gradients = "CM-39" | "X" | "Windows";
 
 const backgroundOptions: Record<Gradients, typeof Background> = {
   "CM-39": Gradient39,
   X: Gradient3,
-  // @ts-expect-error
-  Blobs: Gradient2,
   Windows: Gradient1,
 };
 
