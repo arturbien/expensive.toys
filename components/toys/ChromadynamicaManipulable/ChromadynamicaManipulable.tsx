@@ -62,7 +62,8 @@ const Wheel = styled.div<{ sizeRatio: number }>`
     padding: 1px;
     mask: linear-gradient(black, black) content-box content-box,
       linear-gradient(black, black);
-    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
     border-radius: inherit;
   }
   &:after {
@@ -74,7 +75,8 @@ const Wheel = styled.div<{ sizeRatio: number }>`
     );
     mask: linear-gradient(black, black) content-box content-box,
       linear-gradient(black, black);
-    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
     border-radius: inherit;
     padding: 1px;
   }
