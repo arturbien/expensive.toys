@@ -6,7 +6,7 @@ import { Grid } from "./Layout";
 import Monitor from "./Monitor";
 import T from "./UI/Typography";
 import { HStack, VStack } from "./UI/Stack";
-
+import windowsWallpaper from "../public/windows-wallpaper.png";
 const HeroMain = () => {
   const removeBalloonsRef = React.useRef<() => void | null>(null);
 
@@ -27,7 +27,7 @@ const HeroMain = () => {
             <Monitor
               backgroundStyles={{
                 backgroundColor: "#dead25",
-                backgroundImage: `url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f5ad18b7-74e3-42a4-a6c3-ed075ba5d058/deoasnn-d8facf28-c859-4e0c-8f45-5a2963c07231.png/v1/fill/w_1280,h_720,q_80,strp/windows_95_clouds_wallpaper___16_9_widescreen_by_malekmasoud_deoasnn-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvZjVhZDE4YjctNzRlMy00MmE0LWE2YzMtZWQwNzViYTVkMDU4XC9kZW9hc25uLWQ4ZmFjZjI4LWM4NTktNGUwYy04ZjQ1LTVhMjk2M2MwNzIzMS5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.qR54NYAZoViO3rTcYcytpri1qyJuPg5MSnDLmhLAsbI)`,
+                backgroundImage: `url(${windowsWallpaper.src})`,
                 backgroundSize: "cover",
               }}
             />
@@ -134,7 +134,7 @@ const Monitors = styled.div`
     display: inline-block;
     position: absolute;
     transform: scale(0.88);
-    -webkit-mask-image: linear-gradient(to right, black, transparent);
+    mask-image: linear-gradient(to right, black, transparent);
     filter: opacity(0.5) brightness(0.2) blur(3px);
   }
   .center-monitor {
@@ -149,7 +149,7 @@ const Monitors = styled.div`
     position: absolute;
     right: 0;
     transform: scale(0.92);
-    -webkit-mask-image: linear-gradient(to top left, black, transparent);
+    mask-image: linear-gradient(to top left, black, transparent);
     filter: opacity(0.8) brightness(0.2) blur(1px);
   }
   @media only screen and (max-width: 678px) {
