@@ -22,8 +22,6 @@ const Center = styled.div`
   aspect-ratio: 1 / 1;
   align-content: stretch;
   justify-content: stretch;
-
-  filter: drop-shadow(6.8px 13.6px 5.6px hsl(0deg 0% 0% / 0.29));
 `;
 const Wheel = styled.div<{ sizeRatio: number }>`
   transform: rotate(0deg);

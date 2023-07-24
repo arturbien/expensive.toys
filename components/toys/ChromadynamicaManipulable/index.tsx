@@ -87,7 +87,10 @@ const ChromadynamicaManipulableDemo = () => {
           alignItems="center"
           pt={40}
           pb={40}
-          style={{ overflow: "hidden" }}
+          style={{
+            overflow: "hidden",
+            filter: "drop-shadow(6.8px 13.6px 5.6px hsl(0deg 0% 0% / 0.29))",
+          }}
         >
           <ChromadynamicaManipulable
             steps={steps}
