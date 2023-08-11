@@ -217,7 +217,7 @@ export const PuffySticker = ({
             specularExponent="120"
             lightingColor="#ffffff"
           >
-            <fePointLight id="light" x="60" y="69" z="300" />
+            <fePointLight x="60" y="69" z="300" />
           </feSpecularLighting>
           <feComposite
             in="spec1"
