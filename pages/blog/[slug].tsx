@@ -1,35 +1,34 @@
 import fs from "fs";
 import matter from "gray-matter";
+import lqipModern from "lqip-modern";
+
 import { MDXRemote } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import dynamic from "next/dynamic";
 import Head from "next/head";
-import Link from "next/link";
-import path from "path";
-import { Anchor, Button, GroupBox, Frame, Separator } from "react95";
-import {
-  createDisabledTextStyles,
-  createHatchedBackground,
-} from "react95/dist/common";
-import styled from "styled-components";
-import CTAButton from "../../components/UI/CTAButton";
-import DisabledIconsDemo from "../../components/DisabledIconsDemo";
-import { Center, Grid, Normal } from "../../components/Layout";
-import { postFilePaths, POSTS_PATH } from "../../utils/mdxUtils";
 import Image from "next/image";
-import T from "../../components/UI/Typography";
-import Code from "../../components/UI/Code";
-import CssHeatMaps from "../../components/CssHeatMaps";
-import SVGFilterHeatMaps from "../../components/SVGFilterHeatMaps";
-import Typography from "../../components/UI/Typography";
-import FancyRevealEffects from "../../components/FancyRevealEffects";
-import RGBSplitDemo from "../../components/RGBSplitDemo";
+import path from "path";
+import { GroupBox, Separator } from "react95";
+import { createHatchedBackground } from "react95/dist/common";
+import styled from "styled-components";
 import AmbilightEffectDemo from "../../components/AmbilightEffectDemo";
 import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
 import BlurVignetteDemo from "../../components/BlurVignetteDemo";
-import { SITE_URL } from "../../utils";
-import ViewCounter from "../../components/ViewCounter";
+import CssHeatMaps from "../../components/CssHeatMaps";
+import DisabledIconsDemo from "../../components/DisabledIconsDemo";
+import FancyRevealEffects from "../../components/FancyRevealEffects";
+import { Center, Grid, Normal } from "../../components/Layout";
+import RGBSplitDemo from "../../components/RGBSplitDemo";
+import SVGFilterHeatMaps from "../../components/SVGFilterHeatMaps";
+import CTAButton from "../../components/UI/CTAButton";
+import Code from "../../components/UI/Code";
 import { HStack } from "../../components/UI/Stack";
+import {
+  default as T,
+  default as Typography,
+} from "../../components/UI/Typography";
+import ViewCounter from "../../components/ViewCounter";
+import { SITE_URL } from "../../utils";
+import { POSTS_PATH, postFilePaths } from "../../utils/mdxUtils";
 
 const Card = styled.div`
   position: relative;
@@ -181,14 +180,20 @@ export default function PostPage({ source, frontMatter }) {
                 {frontMatter.publishedOn}
               </T.Body>
               <Card>
-                <StyledImage
-                  src={frontMatter.heroImg}
+                <Image
                   alt={frontMatter.heroImgAlt}
+                  src={frontMatter.heroImg}
+                  placeholder="blur"
                   width={1280}
                   height={675}
-                  priority
-                  // blurDataURL="data:..." automatically provided
-                  // placeholder="blur" // Optional blur-up while loading
+                  blurDataURL={frontMatter.LQIP}
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "auto",
+                    lineHeight: 1,
+                    display: "block",
+                  }}
                 />
               </Card>
               <MDXRemote {...source} components={renderers} />
@@ -222,12 +227,20 @@ export const getStaticProps = async ({ params }) => {
     scope: data,
   });
 
+  const imageUrl = SITE_URL + data.heroImg;
+  const image = await fetch(imageUrl);
+  const imageBuffer = Buffer.from(await image.arrayBuffer());
+  const LQIP = await lqipModern(imageBuffer, {});
+  const LQIPmeta = LQIP.metadata;
+
   return {
     props: {
       source: mdxSource,
       frontMatter: {
         ...data,
-        heroImgAbsolute: SITE_URL + data.heroImg,
+        heroImgAbsolute: imageUrl,
+        LQIP: LQIP.metadata.dataURIBase64,
+        LQIPmeta,
         publishedOn: new Date(data.publishedOn).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
@@ -264,19 +277,6 @@ const Paragraph = styled.p`
   b {
     font-weight: bold;
   }
-`;
-
-const StyledImage = styled(Image)`
-  display: block;
-  object-fit: cover;
-  width: 100%;
-  height: auto;
-  margin: 0;
-  /* border-radius: 8px;
-  border: 2px solid ${(p) => p.theme.borderDarkest}; */
-  /* box-shadow: rgb(0 0 0 / 1%) 0px 1.7px 1.3px, rgb(0 0 0 / 2%) 0px 4.2px 3.1px,
-    rgb(0 0 0 / 2%) 0px 7.9px 5.9px, rgb(0 0 0 / 2%) 0px 14.1px 10.5px,
-    rgb(0 0 0 / 3%) 0px 26.3px 19.6px, rgb(0 0 0 / 4%) 0px 63px 47px; */
 `;
 
 const ProTip = styled(GroupBox)`
