@@ -5,7 +5,6 @@ import lqipModern from "lqip-modern";
 import { MDXRemote } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import Head from "next/head";
-import Image from "next/image";
 import path from "path";
 import { GroupBox, Separator } from "react95";
 import { createHatchedBackground } from "react95/dist/common";
@@ -29,6 +28,8 @@ import {
 import ViewCounter from "../../components/ViewCounter";
 import { SITE_URL } from "../../utils";
 import { POSTS_PATH, postFilePaths } from "../../utils/mdxUtils";
+import React from "react";
+import BlurDownImage from "../../components/BlurDownImage";
 
 const Card = styled.div`
   position: relative;
@@ -74,14 +75,6 @@ const li = styled(T.Body.withComponent("li"))`
   }
 
   list-style-type: square;
-`;
-
-const CodeCard = styled(Card)`
-  width: 100%;
-  font-size: 14px;
-  overflow-x: auto;
-  padding: 1rem;
-  margin: 1rem 0;
 `;
 
 export const components = {
@@ -180,10 +173,9 @@ export default function PostPage({ source, frontMatter }) {
                 {frontMatter.publishedOn}
               </T.Body>
               <Card>
-                <Image
+                <BlurDownImage
                   alt={frontMatter.heroImgAlt}
                   src={frontMatter.heroImg}
-                  placeholder="blur"
                   width={1280}
                   height={675}
                   blurDataURL={frontMatter.LQIP}
