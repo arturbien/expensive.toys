@@ -9,6 +9,7 @@ type Rect = {
   width: number;
   height: number;
   radius: number;
+  reflectiveness: number;
 };
 // React context to store all widgets rects and a hook to set and get them
 const WidgetsContext = React.createContext<{
@@ -50,7 +51,7 @@ const Widgets = (props: React.ComponentProps<typeof WidgetsLayer>) => {
   // create a CSS mask with the shape of rounded corner rectangle from each rect
 
   React.useLayoutEffect(() => {
-    const widgets = ref.current?.querySelectorAll("[data-widget]");
+    const widgets = ref.current?.querySelectorAll("[data-reflective]");
     if (widgets) {
       const rects = Array.from(widgets).map((widget) => {
         const rect = widget.getBoundingClientRect();
@@ -61,7 +62,10 @@ const Widgets = (props: React.ComponentProps<typeof WidgetsLayer>) => {
           bottom: rect.bottom,
           width: rect.width,
           height: rect.height,
-          radius: parseInt(widget.getAttribute("data-radius")),
+          radius: parseInt(widget.getAttribute("data-radius") || "0"),
+          reflectiveness: parseInt(
+            widget.getAttribute("data-reflectiveness") || "0"
+          ),
         };
       });
       setRects(rects);

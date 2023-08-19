@@ -1,8 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { useWidgets } from "./Widgets";
+import { Cursor } from "./Cursor";
 
+const Wrapper = styled.div`
+  position: absolute;
+  inset: 0;
+  filter: url(#hiblur);
+`;
 const ReflectionsLayer = styled.div`
+  isolation: isolate;
+  contain: strict;
   position: absolute;
   inset: 0;
   -webkit-mask-image: var(--reflections);
@@ -10,7 +18,15 @@ const ReflectionsLayer = styled.div`
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   pointer-events: none;
+  /* filter: opacity(0.1); */
+
+  perspective: 800px;
+  perspective-origin: 50% 50%;
   /* background: blue; */
+  & > * {
+    filter: blur(0px) brightness(0.6);
+    filter: blur(0.5px) saturate(140%) hue-rotate(-12deg) brightness(0.6);
+  }
 `;
 
 const Reflections = () => {
@@ -20,36 +36,90 @@ const Reflections = () => {
   // useEffect that creates a mask image css property from each rect
   React.useLayoutEffect(() => {
     const reflections = rects.map((rect) => {
-      const r = rect.radius;
-      const l = rect.left + r;
-      const w = rect.width - 2 * r;
-      const h = rect.width - 2 * r;
-      const t = rect.top + r;
-      console.log(rect.top);
+      const {
+        width,
+        height,
+        left,
+        right,
+        top,
+        bottom,
+        radius,
+        reflectiveness,
+      } = rect;
+
       // RECTANGLES
-      let mask = `${l}px ${rect.top}px/${w}px ${rect.height}px linear-gradient(black, black)`;
-      mask += `, ${rect.left}px ${t}px/${rect.width}px ${h}px linear-gradient(black, black)`;
+
+      // Center
+      let mask = `${left + radius}px ${top + radius}px/${
+        width - radius * 2
+      }px ${height - radius * 2}px linear-gradient(rgba(0, 0, 0, ${
+        reflectiveness / 100
+      }), rgba(0, 0, 0, ${reflectiveness / 100}))`;
+      // Top
+      mask += `, ${left + radius}px ${top}px/${
+        width - radius * 2
+      }px ${radius}px linear-gradient(rgba(0, 0, 0, ${
+        reflectiveness / 100
+      }), rgba(0, 0, 0, ${reflectiveness / 100}))`;
+
+      // Right
+      mask += `, ${right - radius}px ${top + radius}px/${radius}px ${
+        height - radius * 2
+      }px linear-gradient(rgba(0, 0, 0, ${
+        reflectiveness / 100
+      }), rgba(0, 0, 0, ${reflectiveness / 100}))`;
+
+      // Bottom
+      mask += `, ${left + radius}px ${bottom - radius}px/${
+        width - radius * 2
+      }px ${radius}px linear-gradient(rgba(0, 0, 0, ${
+        reflectiveness / 100
+      }), rgba(0, 0, 0, ${reflectiveness / 100}))`;
+
+      // Left
+      mask += `, ${left}px ${top + radius}px/${radius}px ${
+        height - radius * 2
+      }px linear-gradient(rgba(0, 0, 0, ${
+        reflectiveness / 100
+      }), rgba(0, 0, 0, ${reflectiveness / 100}))`;
 
       // CORNERS
 
-      // Left top corner
-      mask += `, ${rect.left}px ${rect.top}px/${2 * r}px ${
-        2 * r
-      }px radial-gradient(black, black ${r}px, transparent ${r}px)`;
-      // Right top corner
-      mask += `, ${rect.right - 2 * r}px ${rect.top}px/${2 * r}px ${
-        2 * r
-      }px radial-gradient(black, black ${r}px, transparent ${r}px)`;
+      // Top left
+      mask += `, ${rect.left}px ${
+        rect.top
+      }px/${radius}px ${radius}px radial-gradient(at bottom right, rgba(0, 0, 0, ${
+        rect.reflectiveness / 100
+      }), rgba(0, 0, 0, ${
+        rect.reflectiveness / 100
+      }) ${radius}px, transparent ${radius}px)`;
 
-      // Left bottom corner
-      mask += `, ${rect.left}px ${rect.bottom - 2 * r}px/${2 * r}px ${
-        2 * r
-      }px radial-gradient(black, black ${r}px, transparent ${r}px)`;
+      // Top right
+      mask += `, ${rect.right - radius}px ${
+        rect.top
+      }px/${radius}px ${radius}px radial-gradient(at bottom left, rgba(0, 0, 0, ${
+        rect.reflectiveness / 100
+      }), rgba(0, 0, 0, ${
+        rect.reflectiveness / 100
+      }) ${radius}px, transparent ${radius}px)`;
 
-      // Right bottom corner
-      mask += `, ${rect.right - 2 * r}px ${rect.bottom - 2 * r}px/${2 * r}px ${
-        2 * r
-      }px radial-gradient(black, black ${r}px, transparent ${r}px)`;
+      // Bottom right
+      mask += `, ${rect.right - radius}px ${
+        rect.bottom - radius
+      }px/${radius}px ${radius}px radial-gradient(at top left, rgba(0, 0, 0, ${
+        rect.reflectiveness / 100
+      }), rgba(0, 0, 0, ${
+        rect.reflectiveness / 100
+      }) ${radius}px, transparent ${radius}px)`;
+
+      // Bottom left
+      mask += `, ${rect.left}px ${
+        rect.bottom - radius
+      }px/${radius}px ${radius}px radial-gradient(at top right, rgba(0, 0, 0, ${
+        rect.reflectiveness / 100
+      }), rgba(0, 0, 0, ${
+        rect.reflectiveness / 100
+      }) ${radius}px, transparent ${radius}px)`;
 
       return mask;
     });
@@ -60,36 +130,97 @@ const Reflections = () => {
   }, [rects]);
 
   return (
-    <ReflectionsLayer ref={ref}>
-      <OneReflection />
-    </ReflectionsLayer>
+    <Wrapper id="asd">
+      <ReflectionsLayer
+        ref={ref}
+        style={
+          {
+            //  filter: "url(#hiblur)"
+          }
+        }
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          width="800px"
+          height="550px"
+        >
+          <defs>
+            <filter id="hiblur" colorInterpolationFilters="sRGB">
+              <feColorMatrix
+                type="luminanceToAlpha"
+                in="SourceGraphic"
+                result="lumMap"
+              />
+              <feComponentTransfer in="lumMap" result="highlightMask">
+                <feFuncA type="discrete" tableValues="0 0 0 0 0 0 1" />
+              </feComponentTransfer>
+
+              <feComposite
+                operator="in"
+                in="SourceGraphic"
+                in2="highlightMask"
+                result="highlights"
+              />
+
+              <feGaussianBlur
+                in="highlights"
+                stdDeviation="12"
+                result="highBlur"
+              />
+
+              <feComposite
+                operator="over"
+                in="highBlur"
+                in2="SourceGraphic"
+                result="final"
+              />
+            </filter>
+
+            <filter id="orton1" colorInterpolationFilters="linearRGB">
+              <feColorMatrix
+                type="matrix"
+                in="SourceGraphic"
+                result="brighter"
+                values="1.3 0 0 0 0.1                                         0 1.3 0 0 0.1                                         0 0 1.3 0 0.1                                         0 0 0 1 0"
+              />
+              <feGaussianBlur
+                in="brighter"
+                stdDeviation="3"
+                result="brightblur"
+              />
+              <feBlend mode="multiply" in="brighter" in2="brightblur" />
+            </filter>
+          </defs>
+        </svg>
+
+        <BackgroundReflection />
+
+        <div
+          id="reflections-portal"
+          style={{
+            position: "absolute",
+            inset: 0,
+            perspective: 550,
+            transformStyle: "preserve-3d",
+          }}
+        >
+          {/* <Cursor id="swag" reflection /> */}
+        </div>
+      </ReflectionsLayer>
+    </Wrapper>
   );
 };
 
 export default Reflections;
 
-const OneReflection = styled.div`
-  position: absolute;
-  transform: translate(var(--one-x), var(--one-y));
-  width: 444px;
-  height: 283px;
+const BackgroundReflection = styled.div`
+  position: fixed;
+  inset: 0;
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: ${(p) => p.theme.material};
-    transform: scale(1.2);
-    filter: blur(1px) opacity(0.2);
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: black;
-    box-shadow: 0px 0px 2.2px rgba(0, 0, 0, 0.053),
-      0px 0px 5.3px rgba(0, 0, 0, 0.077), 0px 0px 9.9px rgba(0, 0, 0, 0.095),
-      0px 0px 17.6px rgba(0, 0, 0, 0.113), 0px 0px 33px rgba(0, 0, 0, 0.137),
-      0px 0px 79px rgba(0, 0, 0, 0.19);
-  }
+  transform: scaleX(-1) scale(0.7) translate(20%, -12%);
+  transform-origin: center;
+  background: var(--os-bg);
+  background-size: cover;
+  filter: blur(0.5px) saturate(95%) hue-rotate(-8deg) brightness(1.3);
 `;
