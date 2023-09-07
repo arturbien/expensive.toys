@@ -14,6 +14,7 @@ import BlackPixelMaskingDemo from "../../components/BlackPixelMaskingDemo";
 import BlurVignetteDemo from "../../components/BlurVignetteDemo";
 import CssHeatMaps from "../../components/CssHeatMaps";
 import DisabledIconsDemo from "../../components/DisabledIconsDemo";
+import BackdropBlurDemo from "../../components/BackdropBlurDemo";
 import FancyRevealEffects from "../../components/FancyRevealEffects";
 import { Center, Grid, Normal } from "../../components/Layout";
 import RGBSplitDemo from "../../components/RGBSplitDemo";
@@ -26,8 +27,7 @@ import {
   default as Typography,
 } from "../../components/UI/Typography";
 import ViewCounter from "../../components/ViewCounter";
-import { SITE_URL } from "../../utils";
-import { POSTS_PATH, postFilePaths } from "../../utils/mdxUtils";
+import { HERO_IMG_PATH, POSTS_PATH, postFilePaths } from "../../utils/mdxUtils";
 import React from "react";
 import BlurDownImage from "../../components/BlurDownImage";
 
@@ -140,6 +140,7 @@ const renderers = {
   AmbilightEffectDemo,
   BlackPixelMaskingDemo,
   BlurVignetteDemo,
+  BackdropBlurDemo,
   ...components,
 };
 
@@ -219,9 +220,8 @@ export const getStaticProps = async ({ params }) => {
     scope: data,
   });
 
-  const imageUrl = SITE_URL + data.heroImg;
-  const image = await fetch(imageUrl);
-  const imageBuffer = Buffer.from(await image.arrayBuffer());
+  const imageUrl = path.join(HERO_IMG_PATH, data.heroImg);
+  const imageBuffer = fs.readFileSync(imageUrl);
   const LQIP = await lqipModern(imageBuffer, {});
   const LQIPmeta = LQIP.metadata;
 

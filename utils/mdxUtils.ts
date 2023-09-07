@@ -28,6 +28,7 @@ export type Toy = {
 };
 
 export const POSTS_PATH = path.join(process.cwd(), "posts");
+export const HERO_IMG_PATH = path.join(process.cwd(), "public");
 // postFilePaths is the list of all mdx files inside the POSTS_PATH directory
 export const postFilePaths = fs
   .readdirSync(POSTS_PATH)
